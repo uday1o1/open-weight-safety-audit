@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Secrets
+.env
+*.key
+
+# Model weights and caches (never committed)
+*.safetensors
+*.bin
+*.gguf
+*.pt
+*.pth
+models/
+hf_cache/
+
+# Raw generations may contain harmful text; only aggregate results are committed
+raw/
+outputs/
+*.log
+
+# OS
+.DS_Store
