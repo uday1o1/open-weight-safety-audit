@@ -1,0 +1,2201 @@
+{
+ "dataset": "strongreject",
+ "source": "https://raw.githubusercontent.com/alexandrasouly/strongreject/3432b2d696b428f242bd507df96d80f686571d5e/strongreject_dataset/strongreject_dataset.csv",
+ "revision": "3432b2d696b428f242bd507df96d80f686571d5e",
+ "kind": "harmful",
+ "count": 313,
+ "seed": null,
+ "items": [
+  {
+   "id": "sr:0",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "c4a4b9e0b8e808928b1cf3e07cc10386bac09e80ee81e6210f3dea661f12220f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:1",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "f65a361f0b59e5d0720681fc00bd5182e5fa5c56dbcc298a39b4b9075675517e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:2",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "41b30a229691f1be838a12272c7c5dbb4772f12cf17f569c84133eed2f925ad9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:3",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "0ede2d8ff1c280a480151c07f3183972b489919441a70e587881aeb2bf1c4be7",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:4",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "091e5de10eb4af92122ed0bbd80af0566baafab255b706269966fa3f015e9561",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:5",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "9bc9163d7c3592c2a12eab345a16e5e083ef6e057841b86384b5cbe8d6afccf3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:6",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "e17bc7ecabd33145e710daff766745df460f589120e0cd31f4781e1bbd36dae3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:7",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "7a202d57a569a2750f745bb58a2e5123b4cc095cae08ce6d870a5c7723506e0d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:8",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "426c9b90da1130913521cbe5df53e969f262859fb0182a2f5a807d6e224a020b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:9",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "35a10743d1b455f25e1bb64590cbced88adcd79e989d837b74d7b01bc6742565",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:10",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "d664280d637bf8f89e85553b081c73523fc756cbfefd804188c3c2ec1ea82764",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:11",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "d5fe3d7b8a7e8aa6b9116662ccd94c8567898a4a191c115ce64d46b778f27a0d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:12",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "0df4e78f39106044a2a9d9dc5c4480721805f34d1fc9ea0e2dbf371a03248af5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:13",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "b562c2ca5145ee9db30fc8d02f174cdc8ef7f1abf4c672c7a6fff074fa2fa660",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:14",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "cab6512c893943afbcbec8de6faa1672d45df8a1f81b699ad0d47d51966f65be",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:15",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "9c1966ee7589ac4e57a7eaf1b3977116d03e953fe24c6c94e8e9129555a55d08",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:16",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "953cfc689d9c11531c1ac902f50117abaa00100f5d1923907a8a889a0166f3db",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:17",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "41fa3ab39a0dba892a405a49a60c74dd6cab314bdd77d6cdf7e2b3a9f65a2458",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:18",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "5d43f67dd28a9bebf21869ba468db9101ab6c100bad76c8b8384914bd0cec3a4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:19",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "bba5a3576ffb3d2185b5669e69f42fdbb7bc23274c5337bfcc4e0a51f049aa1a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:20",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "f4cf31b465074f6bb999f0b8ec89da5ea7628872166d5ac08a25e435710e47d3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:21",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "1dfb8f42006a5a705c0148b536d940fa5ad673f168f42e4d8c289cb20b36730f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:22",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "165a3d9828bed6cfe344b3bd185dadc8fd608c3a7e14f0ac3dcb9dca4729b883",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:23",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "8392535cb5466bfe9cffbd97d703d851e48424ed4d0d6b6ed3a4f8e10d7df6ba",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:24",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "ca4bf5a6a0437d9fab10ffe25d2712d3ab0d9a8116023d2cbe0a8a78a3a2e1ab",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:25",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "2aba9b20b420618725191d6de86fd2503d1453c2e907372f964480c969975104",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:26",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "db138f9423c680dfc501748e6755dc231a8bfcd60b7af249fc9cd37ab0c58698",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:27",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "5e5f50532d1843f4c0f595cd8edc360db306192d6be385e46013596863ff2409",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:28",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "0e47ecf70e3e137d5d9d697e1453959aa1b9229a65309cf4d7000d6cd237fff5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:29",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "55aaadcd471d1c71f25521fd3d3ac2ebe690a805d0b53055948eaf24ad878dc3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:30",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "94cf58713ea9ea36d977a4da5dc100fd5eeda749efbe8645e08f9eeeef4ac3f1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:31",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "829f5010639a65d4b9ac26b2fe966245bd8e2582331dcb1b84c29ed12a0d1741",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:32",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "0ae751830638afd57087807de4b024df8f4fa83c2af61b8f3f9d49bc14a948de",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:33",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "c7ff3b439538340bdee14857ecb580d0b9364611adba20678cc0c758034c1102",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:34",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "5501753aadae9d22332da63c5632b59eabe9bdb2e2e6cf3681e013b20de72c20",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:35",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "930bbbc49eb1040e20478e59820a4f6751b4476b1f9b64812b7e2e462bbc747c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:36",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "16f6c3ce4ca2eb8515ffe6c3a831e7b37c380691ad5434e214c2923aee4967b9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:37",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "7602a873c782ba3b583efed6c1a48f9268ddb4ccc90ab9f9d6283ed3723da1f2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:38",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "50cc82c0ceab6c5a929b97156d704f2611e17873a7fcbd1166b5cd16e37fd97b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:39",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "e631b13579d0667d712da9f70f3b935254545d39814ba9cb6baed93964f96909",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:40",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "d990467a75c1c3dfd5f577a1dffab28796b2437907b51a0082c15794d21c74c9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:41",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "85cd45d8b99ffe0f0a82b53e2517a02302d8b8baa73181154e6e24271d98cdeb",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:42",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "26d056ec09c6f5476aa02aca7bac480a2e750168e3b221f6d00cdd1632758d76",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:43",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "1e634d4d806448edff031a7cd5c4a1776881a28901f8b86d9288e2b0bcebf9c8",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:44",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "09de9721cc3a00158dd20769d1a719230eacaf74f5a3169b3ddbd26dcc8ef0db",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:45",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "76dfd54755a9fc51b6a2bd1d2f0834138b5f52bfbc1d2c498af8ad8df6e72003",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:46",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "d3ee8a25a8c2b49ca513e260418fd441f882b8948a483f8e172725e0145f3ac0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:47",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "cdd93f5c24f0e97c927dd4ad8f902eb43e090243038b0a99daaf9366860b9113",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:48",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "67074393540a0275e83a7c8db8772a786f097a886d58bb1957a942d48d7fe121",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:49",
+   "group": "Disinformation and deception",
+   "ctx": false,
+   "prompt_sha256": "803ea5931082c8df08b7ddf18e79f3d9eeb206f908d807a67cc4e93196bb926d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:50",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "7246b3148e7a2ca59b501b0a5421182f7100042b84570c3a62a0caf83c2c0ae2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:51",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "d021cf01c3a203d09b9140b7f6aed03b34574f21b12bae79486020114a43063a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:52",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "72d60d4d44abee2e74a12a6a89888861ee0d56105fd104d1c245e1996cd1cb73",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:53",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "3519a11f6b0dade8732294f5d710f3fd718e70ebf4ca5eee5154e04fab38f52d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:54",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "aad08e6477766c1d986f019273a2f1960eea7a4b1b7768bba9c6f170a8011b22",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:55",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "6dca0fc05bdca9ec001b0b7169ae58c92934fc7af9d28cebda5027600264bd41",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:56",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "c630343f813bd8ee1b4b530736590d1955d6cf21f25505a16856481ff0987ade",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:57",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "ba568bf8d8e33e6d65bc3993d0684acc42946da67012cb5755f6a7acfd2a8db5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:58",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "3d620b29a1786f660aeef4343b98e77f867eddb0567ab94613b694b893d56cf4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:59",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "11db4b159350fc28fbcd2922c04fab6e70481b0f646c01531b0c4d94ee4f2822",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:60",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "9683973a0bd9a283707d9d5c8bbb5a2310912d84653995bce8ec7ab29222b382",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:61",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "180840421e0b11322dc5a50468d0c25ef6578723406c552bffe4343774ad89f4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:62",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "e525c00ba6868d19ca69a1de36ffc35bfae3646174a92b20807eb8e166d9b515",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:63",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "4de745490dae8d77047c0aa03d5edfe1a1a47c56540bc16b3fb1c3fb41e42ba0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:64",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "57fed108a7c4d35c14053e2a1b9d78ddef4f071b90160f186b4308c073c3718b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:65",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "31c159f69a834842cad826b28cf9178f823ec34a22bceb59903643e8d0ab25ae",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:66",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "4004d486a43b1550b0fddb33e5fb02491c40cab6edd9c31caccd6c88a69f9ea5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:67",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "765b4f143c9690ccb2f15fb58f9cd48a681b6837ea8e704f3b4babdc809231b9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:68",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "dc740bdc30be50bd4d64a0d34be94c624c699e16a3f342ad6ee0f651264b673a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:69",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "4f8dfc4fe0b824ea4f68b209ea6143fe5cf6e0e89602fd404c4e094c7e5f6ba3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:70",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "89b75055ad5e40f8bd7e822f36cd64dc1d295d4484b2280fe7c44222c4a890fa",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:71",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "89a81e498bcc373d99c33176ebddad211b86f9e163f39317002a4127c2da2e5e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:72",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "8f8b0690dfbe5497e961f389c7f9e8e53e28d37e7cd0dc0e55052db24abda5c2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:73",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "57e93a2651f024648fb06be12ff2682f34e32949ba5f8bdb59e308644f462b9d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:74",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "a1ea75d4301c8bb03d6efa9f638e6a1bdccaf6b7b679584cb2113892867164c4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:75",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "05e850e5e888be1cbe1c4a98fc03c07b78fb83c07c9a25768a65b0090a0da23a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:76",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "7f7575f00e3a43f9c32d52ad40935ca48660ae750561a48353d167d82d472f21",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:77",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "4a364b452fb885449c0dd609664beea154f52c3f3c6e5be2b4779a18c4975fe8",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:78",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "45b61fed8e964fd81ea80e5cfbc3fc3501d5b7ff24d7e02d45906f6e18bc10e9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:79",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "07c8f727a4bca6702c7a4f27bd7054023e4d5947e1c65d680572944407c2ad95",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:80",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "b51a3ec8e8b3d4862e6418dd9a051379247f5b367f151abc2d1905f791431360",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:81",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "7b080d3bf210ee000eaafa612b15ab28f6570b621737e472e026a7f50eac3b80",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:82",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "d2782fa2e6d2b1cac31c483dbeb5ea2208fd743cc30000bf4dc4c44f1af56e6c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:83",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "e9e66e6bb40dc13b31c0f92965a8be24da0ad4cabe8dc2d41b0d2b8274e2ae95",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:84",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "e6540fb3bfdf26ba8529d8a8e7ddc95f80d4a02f27ffbc02b428659047f88980",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:85",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "75f6499234ba760a725f94016828938a451771191595b68c4f5f2266647309a4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:86",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "114a18a99eff6004675f90faa7f7a9ffec304058eea8a0b153cc0be53c2313cd",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:87",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "e929161c180bec2c2dbda7bb0634a3b20e094676dcff1ea40ed9b22775963998",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:88",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "b26f1f1f425f98fb5bbd2b586d595029b422233464b94ee5a08e2087a4918a4b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:89",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "f5b6bb79cea1be8895294e459c1f624859247879c9c4844f7032c92286dd3aee",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:90",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "f3da7e773e96de0ac1049e7199c7ecbd42a1ddc17293077ec24a3d231983d38d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:91",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "941dfdc830ebed3dc3b62fe2a5621a4aa9590ed85bf60895a65147675321e6ce",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:92",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "ddcd01e01322b72708997e14214915640f845b5ef908b3cd7e1f9cbf11612873",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:93",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "4b0b7bd05d0bd91b617a72072df8313d9396ccececfbb5e2088ce83fd3750b66",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:94",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "25f7ab40c5a5cdc94902d12723602472d12ed8a4211d91ccc29dbd668c191f97",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:95",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "e7d7f78cb30d483fa9d4b2b7174b876513976ab98fc3a9f9cef51e2218226d51",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:96",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "ddcdccccb2c981ef3e166eb6ade6b674268439bbf1d383c75dec8097f0ef0ee0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:97",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "b2a8a52266955bb58f0e02babf3fa2393f76240485b61415d97f94fc23a7e81c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:98",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "12a0e1140a56784fcef834cf77746d9151f750ff95a588f4ce576692353ba993",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:99",
+   "group": "Hate, harassment and discrimination",
+   "ctx": false,
+   "prompt_sha256": "1787182e08823b1cf4ad42aa2b74d3ec5efe733c5d9b330a5769694d0bed7df1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:100",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "2b8a20173933f8269665b7908c6cb197a94fcf0aec3fbe398091eda56cb3ee1c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:101",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "9fbd12fb564fd5ca38599be5027c471b4549a1c8dc9d8eeeac66a0f5a2949c65",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:102",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "3cf65629008178b346e8d761dd0e49723878275648e172ca0bcfe8ea27fa28f3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:103",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "9ecfb5d8c169207c40e2c9031e6cad92674ae2fe7d17430af9fc475bf1b27a87",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:104",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "bff70d5529bf9665d58fe70c28f935f369b068c5ac589e278a97f966bed76fa3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:105",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "ba7a9f6d1e1e08a2b6ea0155aa0acf277b77615bfc3419b53111d2a144c99a01",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:106",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "7b0cc19ea41488f49beb08642008da4e78d63bee3be9fb81ec74a0987b457705",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:107",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "e91f7ebf9d1aaa17d3feedd726efbecc6743109e699053d7c93347ffc0a22155",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:108",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "ac072b683923d3a23948f1b2487302954db164a822ca7cb0de1fccccc3e7741e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:109",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "b24ef7ac980efba0c49ac473c944776ebcc3eb6477c3acf8dac9cb74b3a80a87",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:110",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "f5e31b9eaa5bfb5968dba046da5cfef5a505c1f5e262b1e0154e4d0a47aae9cb",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:111",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "1fd04f8ae3a067a6e2606c483117dfaa4a49862c05e45e9ac95111b758c520b9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:112",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "88838d19c4f915c6731ebb96efb0128e0ac657954b23e7f4d62117323b36ae9c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:113",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "f96c377b018fb61010cf3cedf7c1e18173bc0c8f9ffedf49b90804efeb0a98fb",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:114",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "4d9f4152b015682bcd90556f566feb76f426b78e9276603088c1e606e813e4d0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:115",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "2723d40dd54e7b0bcdbe38b306bf96617f561a740b6bd4c3b20d478ccbc916de",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:116",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "a17e34448426fc87450bd448c4cd0a66989b9ec4a85260c2d8256b0869c10bbe",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:117",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "97529b390fc1569b4fd4f031439146a418592a024e09f00f8444efa2cc05d321",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:118",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "55e558775505a077c22fbe4f90d8c542daa92f3498045a584422e7e9289d3e4a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:119",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "e4de5e0e0fe4f683c8866288211acce6b13d105372bc571f3011c85dcbe42633",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:120",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "b7e824d78ecacafa89bb378a0ee34ab648858c36ddf76aecd4c51cc55ffc5187",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:121",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "ba0575cbd6c29f8fba2f81dc51c91cfb8cd8e63d74c5a866746fc589fac3f88d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:122",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "079d54ce570082d8f3be9088910f4adb43bee3160e2d01e374635d2b0c60f004",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:123",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "944151299a31a5b55bb6cc219b86a5ccef359a43f6ff6213adf2557cb8d7f558",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:124",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "55e9915022d94fc5d648f9a9740147be0084bd8516d94cb724d6dcb93a91f5aa",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:125",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "a9a46aa21e665a3f9c6498b5d4febc815541c835da86a6f8ea97e3ef02a237af",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:126",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "420f99966a8d88a867e1ea5f10bc5fbe9c6f0c51fe1b7e5b972ead8a7616e6ea",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:127",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "1b2752045935816fe07fe2a72d2dcd4bad10e517fabf28f557c6b7f6b91abbb2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:128",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "af11cfa306d69be06acf09a71d487b697eac76c14745f69bac6cf0fc16d5e33c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:129",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "1a455df65ffe93f6d2d5ac698503d156d3ae1df65f03cbd181031386339c27c8",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:130",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "5667bb993e0ab4a21ff77cf6c9e6f449d704856e14aa40a3748d8ee92635d67c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:131",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "2c1878c138eb66442ca69e63a36f3c5478afd80b421798785d0bb6bdfbfba365",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:132",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "26a1b4cda9065ee1ee16831b3a90f47e5b2f31d669e3f542fccf7a442c589c2a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:133",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "d418f3ad49995d8de8ad864ad74f86d500072b8644ade94fd7c1bda55b8f7f8a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:134",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "0cd64ffb1d212e5799ab48e8a5d88204f6bce92f14ef12a93743d3a09b8a1b7f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:135",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "b604a89ed8823a7343d7985f8b4dcac35ec253f75ab31663a8cc086f834c4870",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:136",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "f7870a0080b7504719fc5e92de2b1c0bf15faace3e46598d8a2c5c7388c4a130",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:137",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "6f7ef2b5fd0dfd1b4f89b924bc3ab917888ba73a240e15d72d67062194173f84",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:138",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "df023ee936c0f59b93255e2428d0b2244788b532bd9953636851664f506cac5f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:139",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "c293a008fbaae3dacaa1429507888c4ec31a8696bca2cd220422e9b7ed5731c1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:140",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "56d97a025b6a052ee6aff6797b03edb545779241d44d4e6a55ea2f844aedacf6",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:141",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "f749969906af851dd56ba8f375d8ce90433081bb41996c917aa8a360ca326ddf",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:142",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "e7b6e27b4199dffb3ce35087a6bdff5754ad6ca9f847a789fb2fd6cd0ea82e0d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:143",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "9f7057b4676b5583ea38e321eeda7a7ccc7c25bb34169d07d51d422c7ec8e2db",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:144",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "841097ad1263b7d9a3f0c9cf9b2fb9b2292262a4557c6a2377f4a98554fe20fb",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:145",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "9b6bf7f1d0f35720f07fc852ecf5f2585c642b258ef5de2f08b9f3ba52660d2f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:146",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "1523fddff272bc80e139968fed9de7da13c405a275358155872c4f135f00a039",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:147",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "f97d9d1f40a5062508f099c7fcd423d6312742f47596af1d960c9a47f4045d13",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:148",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "d343eda74e739998b20bc20ee28bd0c3a399348b0a891a18eeaf7e1fe1b2ab18",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:149",
+   "group": "Illegal goods and services",
+   "ctx": false,
+   "prompt_sha256": "c5b1edcf111321cf0f20a9c80b879b08b947852702e62d5c80e658b41fc5252c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:150",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "82b2fa13d3432b38a27428cef8e6e3f49515d5c89aebe48fe06a036b47fe95f1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:151",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "bf3a2b8eeab474282bf56ccd00077d41b580ad8fed63b08f50be5800a895747c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:152",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "8a886dbb1c5647f524b2b541827a2b00f47904de190b21555759a7814139c3ef",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:153",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "421e98ef9f9bb91a1d41191ccf673e8a5d1fd98bcd79931089679d09882c5132",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:154",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "a2394d8756629db02808ed3a1694582fa344de029d7ed039997be8b39af4004c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:155",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "2d87aa82e73064f2289140d643a471ba5ace0a44d94ce3076b667d2e7a680b25",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:156",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "6f513f68a0f4ef86e553f4bedab132505c82bb4e0c3bb30d574cb395d7ea7f43",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:157",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "f118ea4ba6a391596f6e9b50aaeee50bf6d5aabe47ba65aa9b15ffe64332542d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:158",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "b8fc02d6b271052d5307b048073d088edc60ef9c4a95385ffd4f55dcb908cc73",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:159",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "5c37d030a4a7e3b7f83aff7a2d559c35dacf4ba1c87932a1da542c49becd8736",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:160",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "f542a07f4cecf60209ec4c4a92196ffb09abd84bf3dfb4c70f78f1b8993717cd",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:161",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "a37e0db3949903fb7b0776774eb53aba1ed34fcdd476d377f202f529c2b5d5b1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:162",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "46775663a437a0e3b64f493f3e018ddf205dcf46fbc842bc9d17639cbfa32ebc",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:163",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "17f78dc9551d82c00d8953be09c7e1d0b9a783ef21b952f8a0915dde727a0bca",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:164",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "caf7bc739739ff3722cf88d705926613516770bdf7d752e9ecfcd3572d0df9a4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:165",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "32b93b06e8d5059f55c423562cfbc706592a8812bd2e599fcdb749b0cadf89ee",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:166",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "03375b5374f1d4a32994004e8c0ed731a0f23d2041a15b4f6f72f446d201fb7d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:167",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "9e7c42d0b6864431dfa161172b288a68aa6a9e9b9396a95e73972493cb059929",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:168",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "4cb0420360f40f85ef3d6030f674cc6ba11c6772bff9a2c6b3b6c2fd598c6d46",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:169",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "ea126c6fdfccbbad92e795d91930091221f098b7d928dfd084d4f2b4fb3a6610",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:170",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "b204ed74a82462ea9ed98bcc7664ff697c7a50cc3e4ab6f643060a9cf25930f9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:171",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "df60d6ee3a0184e9b95a7f7da9b7f8b741ab11e69eb6a08316738e0dc65909e5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:172",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "3071e9777fe4c81893d3a7e1a7bd12a4f114fd800e184d7a300225516feca0a6",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:173",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "9b6be0922992050503ac00748367b5122ed22bfb1450983d0d87fb9923385d44",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:174",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "2dd7835bca36da8d1ea6fa51679f1ffdaf479dce24e2bdb8832654d181cf0e0a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:175",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "77053d3145479c7e0619d37765f08c61bb8b53600d4723df2b265a30fa5a575b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:176",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "a649ae87e5e6b4f7d86ef0ae79d1c4d584544b89d7bb7dddb876b1525fc5af16",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:177",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "71f5646d7fd5bf8c2373fd5f873d3357f12966055b0cb549ac8707f26858405e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:178",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "f45dcf8516475313667368fc3a5cd79df35168d33536ffc527b2b711ea5fb5bb",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:179",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "ca43b307a6ff94a8b76b023541fb7e9b17640e7eea7a045356d50fce7330ade4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:180",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "20a6f2aca0bd193e6ff366cbb52f8e1f934fcf1651be23a78da7c4dd86fcd46c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:181",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "e8df36e4b066989ebee4e1ea8343e572002a0a70e8994771aaff4bd0fa9f3d71",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:182",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "d659a3d0252aa4b0d5a39a7147eed2551dd79a5b9cc9d2bf1113cb72219ab412",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:183",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "100b936c6303b4dc1a87d93f5d47d9542fac5fde49dcd342a56f5a328ec5079c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:184",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "83a42aca5b37c5a539413444686d19bb801d73192f9dd12452d9e57d6c5c4a1e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:185",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "5afcd7a3d734c7379b6ab04b9ec41dc39fb7f634b07a7367e3be3eeb0861b539",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:186",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "d6246c2a0a9bcc6d3efe80f0f8fe4e2a8e8ba18fef26d10dbfde8e778e1e1c2b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:187",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "f2835a9683d48dd1662d0abf5999898ed9116164c2a82027485c4f81859edf71",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:188",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "f8fd45afc048ff92e80da3e45704d32a43568831c77f5850b5bb74200e07daa0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:189",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "48f1e3348810c89d4db8d5eff4f5db8eedcb0b448671109b093a12797776a2e4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:190",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "be23e695652e4e7c07900a8f0fafa7fd3f54969a2270e1f638ddab3c9c910de2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:191",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "69824854125a6e42be18c05f535e2fec54a9b2453a0df58e3392feeb5a973f1f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:192",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "23412e8cba1562f9c10698089a173643696af7cda42f13eb24034645e232691c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:193",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "f779ad53d69486fe28d37f6e1b3998d757599932b31954e2c39e53eb5f5ab1f7",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:194",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "fce5259c647d6072e74359257e47a188444f8b6d0c507a5f89aabbcd469f4eb1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:195",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "061c14384362930562e0c89fae5b029276d2615feb3f14afa3a21c3c0f3a1d3f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:196",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "bd42ec3d98505c5a2cbea4eb75bf1aaff127fdcc1868275ca127e5a39d67ef6c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:197",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "8ddc69003cc612ec38e407c891f4e87fd7c71a76b9acf1955d3b7b1bbe3c89d7",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:198",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "eccd611e82fff22e5da490e95abf63cb70483fb7e1dbccd55e69f128ed8ad415",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:199",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "76378a9433ffe5ffc5add00574c3f7a3bf85fbe5f8ffb05885ee225c3dbf12df",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:200",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "3724130a77a18864891371b70581609f6a0607fff366ed5ec33d34ccdd574f07",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:201",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "43afefcac4dddfcdc36620e5cd098296df39839e1e6578e7f5d0f3f76733f484",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:202",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "c3142ca01d5baee76a9ee15b30c165622c71fb1de04f60b864fef5e66a76ee2b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:203",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "19a20652903d5d000b4a71f4d5971cd0e031b7cb2f8fc03456e1254cf3b6cd59",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:204",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "638364d7b0cf44378f428a4bdb372c352384869b21bee6d4158208de999981a0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:205",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "5377cb96df0103a0f34298e5478bce59cf9c9c2e9ae5aeed3722762af5ef5d29",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:206",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "4d5aa13c9cde706fcbf04ee8b3475ebf4823dee586b32f0bafb5c3c8774aa43e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:207",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "718783a60911086fd843b37d0ec81227a08e3c1d648ae9e0e2d88dc9e414df93",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:208",
+   "group": "Non-violent crimes",
+   "ctx": false,
+   "prompt_sha256": "011941540fbb7c0a1577d7ee4447fca7d03b94b2052520fd6db86d98dbe563ef",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:209",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "cc731b88787cf9badf6ca84b3a4a6ad7b80846aa2e4ce63145cc8ce15cabd7b3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:210",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "92ab58bb434966c46354df7f31e9b0ac3c0e18b489158ead9a3f07eb275d1d8d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:211",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "b745dc0604483664f4e4e94a05c442bd60e191e9f67d80dc84f614e75f64b2dd",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:212",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "0df061511b419e3d11570e0af96d0ad73b5693b2bf577c3faeafff948c50ae1d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:213",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "fa84fc45bfa47c1f12d0841fc71cca8043c2555c7e729724d482e9ed407e7564",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:214",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "8f6bc600e076a9e73c7f25e9ae2fe46cb4941120c8a8c4ce8c6f1ee0db15635c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:215",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "e49e18b47cd0aa915e9164c914d462bbdb885f8aede0f0c71542cecbd362babe",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:216",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "9534a93917ba1138d172f71e3b7ecc5dc1cab6d1733fa6971de55c2ba1ec2ccc",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:217",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "27edfceb3a4be49aa33caa4ef9a5833c1ce8cb0f10b8249d96a2625bba596229",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:218",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "76806d7be88840990af3b2646c4611f3dec694d42b4d38899df44261ff1875bd",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:219",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "d26fa6615c562f5ac3e556188b607faea61eb3939775b12ff2b8d01f1385c92b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:220",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "b8b75313c131db0aaad34af390c2659b1649064e7e3698dc2613e44493d35b8e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:221",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "2de1305b5c45592d65b2a7a96718ef667c95be76f02e24d5282f0cc87e49cecd",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:222",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "966ff248f9da1b1e77492bfa00590de028637335a962d58194d2da445d4a3d9e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:223",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "77cf3319cd3da325c4d8ef889a9a9eb4b2e702584adf59c4180cb6e98d2e5662",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:224",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "a9a00689ca7defd4472c24bb633ed3ed30c1a4eade766b26481a467d24a99d32",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:225",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "7bd1f15831c83974e30b3d8943f6fe720779666722dc985a29738da5076d8347",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:226",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "5ce479bebf3fb83a869f53c3e9279157ae80948a2d754f3f9a0e7b833a90dd76",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:227",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "0563cb1a7e238659eb82ae4025af371d90db4f3d80ac2e84f104e88fcc1d53ea",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:228",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "71bb54a4336872011587280f8d57fafff32725b1660c1f3863778bcb80e22a10",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:229",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "71bff497466afa28608641c957691de0b9ce4fc0cb205df44fc35f3937085a81",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:230",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "0379cc769c36b8d455c5333039d0d5e3a29e24c6765e3d6a61db41a24197b7fc",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:231",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "dbad759be0b84fc393db8e5ab56561e7f41ea51d2f7dc24077079366e54c99f7",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:232",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "2afe1cd2b43b2417ed1a07e6b655894328c6efad1e97bf439ddd0792423e9b0c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:233",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "7b9d02dc344f5dbc19c80839b8bf22ae1d15d9e77caa69ba7933e909e2a1dbcf",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:234",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "709f8708e2c65233b149ecbb1635d4a551f5af7e37fede4c68da34c289998d74",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:235",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "035a68562c76e9acd3a7eaf1c402816f5b506ad7f0c50d24e989989a881675d1",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:236",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "c4c89358aab64355c0c8cceeefcb2d506c4973eb347719f3a0b0aed422052f4f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:237",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "3ea144fada1fa70e4518a503c206eccc5935e1a555936d59c82c1372504b4eba",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:238",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "77e99c4897a426738a949806378f5f3f18d763087dcf2761a014cd8a20ea362a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:239",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "c4a69b41c8d37fe9f6086cc4745286d7c71a2b8efeea26df228a19b5f3a8f6d5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:240",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "98cb496fd4497ec554f40c448aa19d8917a4295599103f5133920e7caba3ce4a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:241",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "0fb23fea5d5832c5ca15b681e6a1e4130109343e2b1e776c3017ae47310d4e10",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:242",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "28399a306ab0eb77c0fabc99d6092337eb42fb6cfe6c356817b82ce0d3ea1aad",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:243",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "52893fa1fa2582397dcff049c059c07e5a20358f6139d7efc3d818317ecc7301",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:244",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "9ccb32c6903580fa02dcc250af9c23d947761c17104381887fb1b200e25a4e0d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:245",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "a4fd739467feba54473adcd4aebec644e9301ee19c4ebb6b192f626e10d85d56",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:246",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "8006674779d3456b6679e57d883c97fedd03d4fef8016a7c7ec773def9121c14",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:247",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "a302220ca04bfc1e5c16fe058e0dee65f9150ccc075462f405a6510c7b734ee3",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:248",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "0d6ef1f0d95a3739e924a26c548a69a10012cfad1ceedeefdcff0d6e27cdc8d6",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:249",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "c19e473ba8313726ddf63edac1ec43fc48b1a0339171165f534f2a368bced59f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:250",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "bf4f138b014a0c4da1a01318f5a1eecbdf958b4ce3b76b9fd0925202bfbb9774",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:251",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "87a3d8e079a42bef429f16b1bfac5503f76137a38aa0bb5d6f3db2ad90b433b2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:252",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "f28f72869e5eca9944f96797f42d825f24e659c9bd99538d1127170212b6403b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:253",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "b3b11389a09c0e04c213bfd9abfd64bb18a6e70e35025dbba0dc4c5cd88ee480",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:254",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "0eebd418f7d42bea7157fd8c9cc95ca80389f7c1bb9edf6f205386c29d8b7730",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:255",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "39ddcd76e36e2018fb940f8135382044b1a1fda45ceb7a69da8e2bc5a6df7ce6",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:256",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "ec14ca70f89e24af50efc993815be49bf0bd70f21056311236feb2b06699a7a6",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:257",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "9a225d07ce70c021f8d9edccec027e12fce05167fd79c42ef723ee6f5c596880",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:258",
+   "group": "Sexual content",
+   "ctx": false,
+   "prompt_sha256": "5a4ab5684b58bc3da02795156fface0a5692d00b0298c43232a69b96ade9386f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:259",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "50a19d9bcc766da7f1e6766b57acae2b86995db9e222e9ca9f65bbafc33f3acd",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:260",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "958cb556a5266a3d4fc5e10eaed3682ae42bb89abc58293e95dd59c183898357",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:261",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "716727c8653a0e34c387b89b1e7ec023e34f8da28cffce82f23fe0873e84f729",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:262",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "e50a235d2b07e7747b2f7190e5a5f55a9e26bc244982851480f66676dc254f71",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:263",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "6040c39d3c70f1f937984d45f2c77c845b90e524ffc974c3965b13c93cee4b7d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:264",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "19f56ea9a0471a9b78a022ee604293ac068194551d7e0803ad2a98bc05344717",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:265",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "44cd8483ac11e87b71a73e341070a065165fdc634be3a94dbe9677adb7109b49",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:266",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "49df41fa82814a2c793bff7ed50d9d1a98fe182e32ecb1b952f0fb1ea1f8669b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:267",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "aafb88d85ad3b4212c82318e0e6d06790bfb5d10eac6f5f240f37a802fcf034e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:268",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "ddab576983a6f996b57b9abc70f015709cbcacd0011b62600cd82003ecf05f8f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:269",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "e920712eed0957ab24897c7bc78372d3e2c4720c2d04c5aca9499b3153b4772e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:270",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "602241b03a1b2ce889a83e3ef34cde6bafcdb070ec79a54242f54672dcfbe05e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:271",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "7685991840073fb87bbc7697f2c0296d9cd0e81fdc972dcec91555a1b2769eea",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:272",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "3899ebf570926e43fa0b386ad99d59718adcb709688bbf363f5a8827d1825582",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:273",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "466a307b2376cd69f45bfcbb72df6a0b14847ebc23001e16f43bfb353553e3b2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:274",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "e4aef7fa0d647e8a34d6e598ad0e48634a7e67807e1224bd453ddd5810db8770",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:275",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "67690334c7108579e2a38baace48a0f48267aa7bb1ad572ac5a360ccaedfcc5c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:276",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "9cebd604ef260a2f48b942fc2e57149f004c2f9a276892e2041f8d7f3879f272",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:277",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "e48d9c88096c6dc88322ab80d2bdf1f8f49f967ac2e8795e3cc914be32ac119c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:278",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "b338559dc053bab02b23ef93c11b727aa483625f42c892fbbeed0caa9155d077",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:279",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "d626c7bb910c09f1ed7b037cfaa559763cc9f19600731d81d9367bd0f962310b",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:280",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "0a989ebdda623069717f85af4d232333949d1494cbb3d9dc0a33743412acf8b0",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:281",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "37639ce821cfc7d37164e2b89808e063158bf559fea03a1cd7e4165853ee02ee",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:282",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "c0da0345b6fec4b667f5414c23fa796bb0e0193f4f3dbd3c32bebc2beb3d4599",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:283",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "405e9a580d35dfdfbc9205f72e903e8eb62a9b670c1a2cdfc862f90299d51e2a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:284",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "a596663144a585a3dfa40f270109f4ff41a25a774854766dc8e58bf039147a62",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:285",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "34e9c4b0e6dd9404de1403edc250051b98c090d4d0e04f48966a42abb2897d05",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:286",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "31016a0ca75c5a08aacb41de866e51ce5504993c90f813d59165b881ad2dd5c5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:287",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "5957868ff7ea21f808033dc1f79d21d4e46339cf88c8c8ea4cee368a558ee56d",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:288",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "171abe744191fa8545a532f4bf6accc5ab475404866e2395771ae8da52ead078",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:289",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "27476d503f34464e7c2e874ec4c6d7aa8a96efc290012aa1e67ff299d4afa5a2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:290",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "c6de7eab8bb6db9dc600da9f22a4341bda3e582e39108ebf4bb59bebd38fd58a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:291",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "bbd959340e73505ac19423e7ffe4e0b29baab669d5e15140241f1155803d6623",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:292",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "85abc32f251928fe2979c4f6b14900368faf1ecf629dbdd99ffb054cca667a80",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:293",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "83479c4eb5dea5487f34cff876e40accd822b53dc79290c197275758526b7da4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:294",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "14de456bc8abeec5ab9580ed12f4326cc1c8c589b9592dbdf244868e2c5bd563",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:295",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "3601bd3cf09778f858b6d37c3155880aea23ae6678287fc44e6f241b876bc94e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:296",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "63fff62c78fe85a22e77e00dc99fae1b1ca8845ae51b7838d4e14695ab7d226a",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:297",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "67fd3370bf467fc8a9be28275769c3ad88441343785f3c908745867d3e37b4b4",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:298",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "dbf898922bc1e45e9a7a1895ad3630198472a677eec62f9c74f7f79d27f2fafa",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:299",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "d4da125626d7e01f8ce2e38e8fffa1b670eaaa9ffaa3d7593fbee0ac7eedea17",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:300",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "c907232f9248c70661632429ba895d20fdc822416267a455582b9fa78ae010b9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:301",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "21f4d4a37d56bbb809acdd44b4ea4abfcf291cc975fd345102d74f4206ca7190",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:302",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "824741e81f9f84fae451c08ad17eaf6fdd15e0b19276ba595bd8d33ba9369a5e",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:303",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "6afda5fc3f445a0211545fa14c0befd37032d779bd2a1328fd684920f4621938",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:304",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "43e4e97681344549b1cbe6f1f2d832a7de8382eb4aed2863bfed8aa8ec7fbe79",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:305",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "7299208009a3cedfa2e43ba459096122340380ea5adadd49599a8284a6cc890c",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:306",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "074d0322c6e333e8077084318d0b3c2a741b0496c73e6064571aef1718f04ff2",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:307",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "ddc4bef3a40ed59f6e98c2ff6d6434e8c8b4dff46897dbd950f5e2d534bd4ea8",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:308",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "6105f4ae045f70760bc5841eb6cce5398fc769b76d724c7de65c9ad0fccd0b4f",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:309",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "786049e7da20ad3cbc65b6f7d4cc9ccb159e161be88681e6c56695702c7418ff",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:310",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "238db6017aa768ea180cf7bce559e679e5f09071668cf34b19d97974668415e5",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:311",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "b0be78d0be28862753039d2cf76cf2e11e2e39383b7c596b12dd971f57ed11e9",
+   "answer_sha256": null
+  },
+  {
+   "id": "sr:312",
+   "group": "Violence",
+   "ctx": false,
+   "prompt_sha256": "b62384a01750bdb5e2c721414d3ec8ac4c0925730b2d2d8242ebe9853c26f875",
+   "answer_sha256": null
+  }
+ ]
+}

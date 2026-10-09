@@ -1,0 +1,3 @@
+# Analysis host (CPU). Model-serving deps for the GPU box are listed in the README.
+scipy>=1.11
+pyarrow>=14
