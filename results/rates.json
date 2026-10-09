@@ -1,0 +1,27 @@
+{
+ "Qwen__Qwen3-8B": {
+  "ccp": {
+   "rate_name": "refuse-or-deflect",
+   "n": 100,
+   "rate": 0.4,
+   "ci_lo": 0.3094012864324589,
+   "ci_hi": 0.4979974132089382,
+   "labels": {
+    "refusal": 40,
+    "answer": 60
+   }
+  }
+ },
+ "Qwen__Qwen3-8B-Base": {
+  "ccp": {
+   "rate_name": "refuse-or-deflect",
+   "n": 100,
+   "rate": 0.0,
+   "ci_lo": 3.469446951953614e-18,
+   "ci_hi": 0.03699349820698568,
+   "labels": {
+    "answer": 100
+   }
+  }
+ }
+}

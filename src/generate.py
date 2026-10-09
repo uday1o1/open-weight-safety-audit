@@ -135,8 +135,21 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int) -> list
     return [t.split("```")[0].split("# Query:")[0].strip() for t in texts]
 
 
-def run(model_id: str, dataset: str, load_in_4bit: bool = False) -> Path:
-    """Generate completions for one model over one probe set; batched and resumable."""
+def free_gpu(*objs) -> None:
+    import gc
+    for o in objs:
+        del o
+    gc.collect()
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    except Exception:
+        pass
+
+
+def run_loaded(model, tok, model_id: str, dataset: str) -> Path:
+    """Generate one probe set with an already-loaded model; batched and resumable."""
     import probes
 
     items = probes.load(dataset)
@@ -144,9 +157,8 @@ def run(model_id: str, dataset: str, load_in_4bit: bool = False) -> Path:
     already = done_ids(path)
     todo = [p for p in items if p.id not in already]
     if not todo:
-        print(f"{model_id} / {dataset}: all {len(items)} done")
+        print(f"{model_id} / {dataset}: all {len(items)} done", flush=True)
         return path
-    model, tok = load_model(model_id, load_in_4bit=load_in_4bit)
     maxn = MAX_NEW_TOKENS[dataset]
     done = 0
     for start in range(0, len(todo), BATCH):
@@ -159,8 +171,36 @@ def run(model_id: str, dataset: str, load_in_4bit: bool = False) -> Path:
             append_record(path, build_record(model_id, p, c))
         done += len(chunk)
         print(f"{model_id} / {dataset}: {done}/{len(todo)} (+{len(already)} resumed)", flush=True)
-    print(f"{model_id} / {dataset}: wrote {done} records to {path}")
+    print(f"{model_id} / {dataset}: wrote {done} records to {path}", flush=True)
     return path
+
+
+def _pending(model_id: str, dataset: str) -> bool:
+    import probes
+    done = done_ids(output_path(model_id, dataset))
+    return any(p.id not in done for p in probes.load(dataset))
+
+
+def run_model(model_id: str, datasets: list[str], load_in_4bit: bool = False) -> None:
+    """Load a model once, generate every listed probe set, then free the GPU."""
+    if not any(_pending(model_id, ds) for ds in datasets):
+        print(f"{model_id}: all {len(datasets)} sets already done", flush=True)
+        return
+    model, tok = load_model(model_id, load_in_4bit=load_in_4bit)
+    try:
+        for ds in datasets:
+            run_loaded(model, tok, model_id, ds)
+    finally:
+        free_gpu(model)
+
+
+def run(model_id: str, dataset: str, load_in_4bit: bool = False) -> Path:
+    """Single (model, dataset) run: load, generate, free. For ad-hoc use."""
+    model, tok = load_model(model_id, load_in_4bit=load_in_4bit)
+    try:
+        return run_loaded(model, tok, model_id, dataset)
+    finally:
+        free_gpu(model)
 
 
 def _demo() -> None:
