@@ -5,6 +5,7 @@ REPO_DIR="${AUDIT_REPO_DIR:-$HOME/open-weight-safety-audit}"
 export AUDIT_OUTPUT_DIR="${AUDIT_OUTPUT_DIR:-$HOME/audit-outputs}"
 export AUDIT_LABELED_DIR="${AUDIT_LABELED_DIR:-$HOME/audit-labeled}"
 export HF_HOME="${HF_HOME:-$HOME/hf}"
+export AUDIT_BATCH="${AUDIT_BATCH:-8}"        # conservative for a 24 GB card
 export PYTHONPATH="$REPO_DIR/src"
 LOG="$HOME/audit-run.log"
 cd "$REPO_DIR"
