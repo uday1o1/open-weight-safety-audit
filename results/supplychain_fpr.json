@@ -1,0 +1,37 @@
+{
+ "pickle_scanner": {
+  "detection": {
+   "n": 100,
+   "hits": 100,
+   "rate": 1.0,
+   "ci_lo": 0.963,
+   "ci_hi": 1.0
+  },
+  "false_positive": {
+   "n": 200,
+   "hits": 0,
+   "rate": 0.0,
+   "ci_lo": 0.0,
+   "ci_hi": 0.0188
+  }
+ },
+ "template_diff": {
+  "detection": {
+   "n": 8,
+   "hits": 8,
+   "rate": 1.0,
+   "ci_lo": 0.6756,
+   "ci_hi": 1.0
+  },
+  "false_positive": {
+   "n": 8,
+   "hits": 0,
+   "rate": 0.0,
+   "ci_lo": 0.0,
+   "ci_hi": 0.3244
+  }
+ },
+ "format_classifier": {
+  "safetensors_safe_and_pickle_flagged": true
+ }
+}

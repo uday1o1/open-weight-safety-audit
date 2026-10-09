@@ -15,10 +15,11 @@ from __future__ import annotations
 import difflib
 import hashlib
 import io
-import pickletools
 import socket
 from dataclasses import dataclass
 from pathlib import Path
+
+from picklescan.scanner import scan_bytes, SafetyLevel
 
 # ---------- R1/R7: checksum ----------
 def sha256_file(path: str | Path, chunk: int = 1 << 20) -> str:
@@ -34,67 +35,40 @@ def verify_checksum(path: str | Path, expected_sha256: str) -> bool:
 
 
 # ---------- R5: malicious serialized model files ----------
-# Pickle globals that enable code execution or host access when a .bin/.pt is loaded.
-# A clean torch/numpy checkpoint references only data types (torch.*, collections,
-# numpy.*), so these names flag tampering rather than ordinary weights.
-_DANGEROUS = {
-    "os", "posix", "nt", "subprocess", "sys", "socket", "shutil", "pty", "runpy",
-    "importlib", "builtins", "__builtin__", "operator", "functools", "codecs",
-    "webbrowser", "ctypes", "multiprocessing",
-}
-_DANGEROUS_ATTRS = {"eval", "exec", "compile", "__import__", "system", "popen",
-                    "getattr", "setattr", "open"}
+# A pickle (.bin/.pt) runs code on load. Global resolution is delegated to picklescan,
+# which correctly simulates the pickle stack (stack-based hand-parsing mis-resolves
+# memoized globals); on top of its verdicts we apply the policy below. A clean torch/
+# numpy checkpoint references only data reconstructors, so this flags tampering, not
+# ordinary weights -- measured as a false-positive rate in supplychain_eval.
+#
+# Module roots a legitimate weight file may use even when picklescan marks them
+# Suspicious (array/tensor/string reconstruction helpers like numpy._core._frombuffer
+# and _codecs.encode). Dangerous verdicts are always flagged regardless of module.
+_SAFE_RECONSTRUCT_MODULES = {"numpy", "_codecs", "torch", "collections", "copyreg"}
 
 
 @dataclass(frozen=True)
 class PickleFinding:
-    opcode: str
-    detail: str
-
-
-_STRING_OPS = {"SHORT_BINUNICODE", "BINUNICODE", "BINUNICODE8", "UNICODE",
-               "SHORT_BINSTRING", "BINSTRING", "STRING"}
-
-
-def _dangerous(module: str, attr: str) -> bool:
-    return module.split(".")[0] in _DANGEROUS or attr in _DANGEROUS_ATTRS
+    module: str
+    name: str
+    level: str          # picklescan SafetyLevel name: Suspicious | Dangerous
 
 
 def scan_pickle(data: bytes) -> list[PickleFinding]:
-    """List dangerous operations in a pickle stream. Empty list == no code-exec risk.
+    """List code-execution risks in a pickle stream. Empty list == no risk under policy.
 
-    Resolves GLOBAL (module+attr in the operand) and STACK_GLOBAL (module+attr pushed
-    as the two preceding strings), flags any that reference a denylisted module or a
-    dangerous attribute, and notes the REDUCE/INST/OBJ/NEWOBJ that then invokes it.
-    A clean torch/numpy checkpoint references only data types and stays empty.
+    Flags every Dangerous global, and every Suspicious global whose module is not a known
+    weight-reconstruction helper. Catches os/subprocess/builtins.eval/__import__ gadgets
+    across pickle protocols while clearing legitimate numpy/torch state_dicts.
     """
-    findings: list[PickleFinding] = []
-    recent: list[str] = []          # rolling buffer of recent pushed strings
-    last_global: str | None = None
-    for opcode, arg, _ in pickletools.genops(io.BytesIO(data)):
-        name = opcode.name
-        if name in _STRING_OPS and isinstance(arg, str):
-            recent.append(arg)
-            recent[:] = recent[-4:]
-            continue
-        if name == "GLOBAL":
-            parts = str(arg).split()
-            module, attr = (parts + ["", ""])[:2]
-        elif name == "STACK_GLOBAL":
-            module, attr = (recent[-2] if len(recent) >= 2 else ""), \
-                           (recent[-1] if recent else "")
-        elif name in ("REDUCE", "INST", "OBJ", "NEWOBJ", "NEWOBJ_EX"):
-            if last_global:
-                m, a = (last_global.split(".", 1) + [""])[:2]
-                if _dangerous(m, last_global.rsplit(".", 1)[-1]):
-                    findings.append(PickleFinding(name, f"calls {last_global!r}"))
-            continue
-        else:
-            continue
-        label = f"{module}.{attr}".strip(".")
-        last_global = label
-        if _dangerous(module, attr):
-            findings.append(PickleFinding(name, f"imports {label!r}"))
+    result = scan_bytes(io.BytesIO(data), "model")
+    findings = []
+    for g in result.globals:
+        root = g.module.split(".")[0]
+        if g.safety == SafetyLevel.Dangerous or (
+            g.safety == SafetyLevel.Suspicious and root not in _SAFE_RECONSTRUCT_MODULES
+        ):
+            findings.append(PickleFinding(g.module, g.name, g.safety.name))
     return findings
 
 
@@ -193,10 +167,11 @@ def _demo() -> None:
     class Evil:
         def __reduce__(self):
             return (os.system, ("echo pwned",))
-    findings = scan_pickle(pickle.dumps(Evil()))
-    assert findings, "malicious pickle not detected"
-    assert any("system" in f.detail or "os" in f.detail for f in findings), findings
-    assert any(f.opcode == "REDUCE" for f in findings)
+    for proto in (0, 2, 4, 5):
+        findings = scan_pickle(pickle.dumps(Evil(), protocol=proto))
+        assert findings, f"malicious pickle (proto {proto}) not detected"
+        assert any(f.name == "system" for f in findings), findings
+        assert all(f.level in ("Suspicious", "Dangerous") for f in findings)
 
     # Format classification
     assert classify_format("model.safetensors") == ("safetensors", True)
