@@ -105,6 +105,25 @@ def significant(p: float, alpha: float = BONFERRONI_ALPHA) -> bool:
     return p < alpha
 
 
+def cohens_kappa(rater_a: list, rater_b: list) -> float:
+    """Cohen's kappa for two raters over the same items (any hashable labels).
+
+    Used to validate the automated political-topic judge against hand labels:
+    the report requires kappa >= 0.6 before the judge's rates are reported.
+    """
+    if len(rater_a) != len(rater_b) or not rater_a:
+        raise ValueError("raters must be equal-length and non-empty")
+    n = len(rater_a)
+    labels = set(rater_a) | set(rater_b)
+    po = sum(x == y for x, y in zip(rater_a, rater_b)) / n
+    pe = sum(
+        (rater_a.count(k) / n) * (rater_b.count(k) / n) for k in labels
+    )
+    if pe == 1.0:  # both raters constant on the same single label
+        return 1.0
+    return (po - pe) / (1 - pe)
+
+
 def _demo() -> None:
     # Wilson: known textbook value for 0/10 upper bound ~= 0.278 (Agresti-Coull family).
     w = wilson(0, 10)
@@ -138,6 +157,15 @@ def _demo() -> None:
 
     assert significant(0.001) and not significant(0.01)
     assert abs(BONFERRONI_ALPHA - 0.0025) < 1e-12
+
+    # Cohen's kappa: perfect agreement -> 1; chance-level -> ~0.
+    assert cohens_kappa(["a", "b", "c"], ["a", "b", "c"]) == 1.0
+    # Known value: 2x2 with a=20,b=5,c=10,d=15 (n=50). po=0.70, pe=0.50, k=0.40.
+    ra = ["y"] * 20 + ["y"] * 5 + ["n"] * 10 + ["n"] * 15
+    rb = ["y"] * 20 + ["n"] * 5 + ["y"] * 10 + ["n"] * 15
+    assert abs(cohens_kappa(ra, rb) - 0.40) < 1e-9, cohens_kappa(ra, rb)
+    # Systematic disagreement -> negative.
+    assert cohens_kappa(["a", "b"], ["b", "a"]) < 0
     print("stats self-check passed")
 
 
