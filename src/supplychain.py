@@ -21,7 +21,7 @@ from pathlib import Path
 
 from picklescan.scanner import scan_bytes, SafetyLevel
 
-# ---------- R1/R7: checksum ----------
+# ---------- checksum ----------
 def sha256_file(path: str | Path, chunk: int = 1 << 20) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
@@ -34,7 +34,7 @@ def verify_checksum(path: str | Path, expected_sha256: str) -> bool:
     return sha256_file(path) == expected_sha256.lower().strip()
 
 
-# ---------- R5: malicious serialized model files ----------
+# ---------- malicious serialized model files ----------
 # A pickle (.bin/.pt) runs code on load. Global resolution is delegated to picklescan,
 # which correctly simulates the pickle stack (stack-based hand-parsing mis-resolves
 # memoized globals); on top of its verdicts we apply the policy below. A clean torch/
@@ -84,11 +84,11 @@ def classify_format(path: str | Path) -> tuple[str, bool]:
     if ext in _PICKLE_EXTS:
         return "pickle", False
     if ext == ".gguf":
-        return "gguf", True          # no pickle code, but carries a chat template (R6)
+        return "gguf", True          # no pickle code, but carries a chat template
     return "unknown", False
 
 
-# ---------- R6: chat-template tampering ----------
+# ---------- chat-template tampering ----------
 def chat_template_diff(local: str, upstream: str) -> str:
     """Unified diff of a bundled chat template vs the upstream reference; '' if identical."""
     if local == upstream:
@@ -98,7 +98,7 @@ def chat_template_diff(local: str, upstream: str) -> str:
         fromfile="upstream", tofile="local", lineterm=""))
 
 
-# ---------- R8: exposed local inference server ----------
+# ---------- exposed local inference server ----------
 # Default ports of common self-hosted runtimes.
 INFERENCE_PORTS = {11434: "ollama", 8000: "vllm/tgi", 8080: "llama.cpp",
                    5000: "generic", 7860: "gradio", 1234: "lm-studio"}
@@ -135,7 +135,7 @@ def listening_inference_servers(ports: dict[int, str] = INFERENCE_PORTS) -> list
     """Probe known inference ports; flag any reachable on a non-loopback local address.
 
     Unprivileged and offline: connects only to this machine's own loopback and LAN
-    address. A port reachable on the LAN IP is exposed beyond localhost (R8); a port
+    address. A port reachable on the LAN IP is exposed beyond localhost; a port
     reachable only on 127.0.0.1 is correctly bound.
     """
     lan = _primary_lan_ip()
