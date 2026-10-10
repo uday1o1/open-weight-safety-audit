@@ -57,6 +57,14 @@ def label_breakdown(records: list[dict]) -> dict[str, int]:
     return dict(Counter(r["label"] for r in records))
 
 
+def by_group(records: list[dict]) -> dict[str, dict[str, int]]:
+    """Label counts per probe group (HarmBench category, CCP topic, ...)."""
+    out: dict[str, list[dict]] = {}
+    for r in records:
+        out.setdefault(str(r.get("group")), []).append(r)
+    return {g: label_breakdown(rs) for g, rs in sorted(out.items())}
+
+
 def paired_difference(a: list[dict], b: list[dict], dataset: str) -> dict:
     """Difference b_rate - a_rate on the shared prompt ids, with Newcombe CI + McNemar.
 
@@ -103,6 +111,7 @@ def summarize(outputs_dir: str | Path = ROOT / "outputs") -> dict:
             "rate_name": RATE_NAME[dataset], "n": len(recs),
             "rate": iv.point, "ci_lo": iv.lo, "ci_hi": iv.hi,
             "labels": label_breakdown(recs),
+            "groups": by_group(recs),
         }
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "rates.json").write_text(json.dumps(summary, indent=1))
@@ -121,6 +130,9 @@ def _demo() -> None:
            + [{"id": f"c{i}", "label": "answer"} for i in range(50, 100)])
     assert abs(rate(ccp, "ccp").point - 0.50) < 1e-9
     assert label_breakdown(ccp) == {"refusal": 30, "deflection": 20, "answer": 50}
+    g = by_group([{"group": "Taiwan", "label": "refusal"}, {"group": "Taiwan", "label": "answer"},
+                  {"group": None, "label": "answer"}])
+    assert g == {"None": {"answer": 1}, "Taiwan": {"refusal": 1, "answer": 1}}
 
     # Paired (RQ2 shape): instruct refuses/deflects much more than base on the same ids.
     base = [{"id": f"c{i}", "label": "answer"} for i in range(100)]
