@@ -78,6 +78,22 @@ def _sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _download(req, name: str, attempts: int = 6) -> bytes:
+    """urlopen + read with retry/backoff: a transient SSL/network blip mid-run is not fatal."""
+    import time
+    for i in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return r.read()
+        except Exception as e:                       # transient: SSL EOF, reset, timeout, 5xx
+            if i == attempts - 1:
+                raise
+            wait = 2 ** i
+            print(f"[probes] {name} fetch failed ({e}); retry {i + 1}/{attempts - 1} in {wait}s",
+                  flush=True)
+            time.sleep(wait)
+
+
 def _fetch(name: str) -> bytes:
     """Download a pinned source into data/raw/, cached by name+revision."""
     RAW.mkdir(parents=True, exist_ok=True)
@@ -88,8 +104,7 @@ def _fetch(name: str) -> bytes:
         token = (Path.home() / ".cache/huggingface/token")
         if "huggingface.co" in SOURCE[name] and token.exists():
             req.add_header("Authorization", f"Bearer {token.read_text().strip()}")
-        with urllib.request.urlopen(req) as r:
-            data = r.read()
+        data = _download(req, name)
         if data[:40].lstrip().startswith(b"Access to") or data[:15] == b"<!DOCTYPE html>":
             raise RuntimeError(f"{name}: source returned an access/error page, not data")
         cache.write_bytes(data)

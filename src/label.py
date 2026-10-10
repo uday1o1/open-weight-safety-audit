@@ -66,10 +66,17 @@ def _build_judge_prompt(dataset: str, probe, completion: str, build_fn) -> str:
     return build_fn(probe.prompt, completion)
 
 
-def judge_dataset(model_id: str, dataset: str, judge_model, judge_tok) -> Path:
-    """Label a judged set using an already-loaded judge model; resumable."""
+def judge_dataset(model_id: str, dataset: str, judge_model, judge_tok,
+                  batch: int | None = None) -> Path:
+    """Label a judged set using an already-loaded judge model; resumable.
+
+    `batch` overrides the generation batch size: the HarmBench 13B classifier processes long
+    inputs (completion + template ~1k tokens) and OOMs a 24 GB card at the default batch, so
+    its caller passes a smaller one.
+    """
     import probes
 
+    bs = batch or generate.BATCH
     _, build_fn, parse_fn, chat_wrap, max_new, _ = JUDGE_SPEC[dataset]
     by_id = {p.id: p for p in probes.load(dataset)}
     recs = _read(generate.output_path(model_id, dataset))
@@ -80,8 +87,8 @@ def judge_dataset(model_id: str, dataset: str, judge_model, judge_tok) -> Path:
         print(f"{model_id}/{dataset}: already labeled ({len(recs)})")
         return out
 
-    for start in range(0, len(todo), generate.BATCH):
-        chunk = todo[start:start + generate.BATCH]
+    for start in range(0, len(todo), bs):
+        chunk = todo[start:start + bs]
         prompts = [_build_judge_prompt(dataset, by_id[r["id"]], r["completion"], build_fn)
                    for r in chunk]
         rendered = [

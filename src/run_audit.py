@@ -13,6 +13,7 @@ aggregate JSON in results/ is meant to be committed.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -36,8 +37,21 @@ RESULTS = aggregate.RESULTS
 
 
 def phase_generate() -> None:
+    # One model's load/gen failure (transient gated-repo auth, OOM, network) must not abort the
+    # others. Retry once, then skip and move on; the run is resumable, so a skipped model is
+    # picked up on the next invocation. Record skips so the gap is visible.
+    failed = []
     for model_id, datasets in TARGETS.items():
-        generate.run_model(model_id, datasets)
+        for attempt in (1, 2):
+            try:
+                generate.run_model(model_id, datasets)
+                break
+            except Exception as e:
+                print(f"[run_audit] {model_id} generation attempt {attempt} failed: {e}", flush=True)
+                if attempt == 2:
+                    failed.append(model_id)
+    if failed:
+        print(f"[run_audit] GENERATION INCOMPLETE, skipped models: {failed}", flush=True)
 
 
 def phase_label() -> None:
@@ -56,16 +70,20 @@ def phase_label() -> None:
                     if ds in datasets:
                         label.judge_dataset(model_id, ds, jm, jt)
         finally:
-            generate.free_gpu(jm)
+            del jm, jt
+            generate.free_gpu()
 
     # 3. HarmBench classifier (4-bit): one load for the harmbench set
     hm, ht = generate.load_model(label.HARMBENCH_JUDGE, load_in_4bit=True)
     try:
         for model_id, datasets in TARGETS.items():
             if "harmbench" in datasets:
-                label.judge_dataset(model_id, "harmbench", hm, ht)
+                # 13B judge + ~1k-token inputs: small batch to fit a 24 GB card.
+                label.judge_dataset(model_id, "harmbench", hm, ht,
+                                    batch=int(os.environ.get("AUDIT_JUDGE_BATCH", "4")))
     finally:
-        generate.free_gpu(hm)
+        del hm, ht
+        generate.free_gpu()
 
 
 def phase_aggregate() -> None:

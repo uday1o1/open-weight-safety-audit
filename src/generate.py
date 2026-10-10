@@ -78,9 +78,18 @@ def _urial_template() -> str:
     CACHE.mkdir(parents=True, exist_ok=True)
     cache = CACHE / "urial_inst_1k_v4.txt"
     if not cache.exists():
+        import time
         req = urllib.request.Request(URIAL_URL, headers={"User-Agent": "audit/1.0"})
-        with urllib.request.urlopen(req) as r:
-            cache.write_bytes(r.read())
+        for i in range(6):                           # retry/backoff: transient SSL/network blip
+            try:
+                with urllib.request.urlopen(req, timeout=120) as r:
+                    cache.write_bytes(r.read())
+                break
+            except Exception as e:
+                if i == 5:
+                    raise
+                print(f"[generate] URIAL fetch failed ({e}); retry in {2 ** i}s", flush=True)
+                time.sleep(2 ** i)
     return cache.read_text()
 
 
@@ -135,10 +144,10 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int) -> list
     return [t.split("```")[0].split("# Query:")[0].strip() for t in texts]
 
 
-def free_gpu(*objs) -> None:
+def free_gpu() -> None:
+    """Release cached GPU memory. Callers must `del` their own model references first --
+    a function cannot drop the caller's names, so a model still referenced stays resident."""
     import gc
-    for o in objs:
-        del o
     gc.collect()
     try:
         import torch
@@ -191,7 +200,8 @@ def run_model(model_id: str, datasets: list[str], load_in_4bit: bool = False) ->
         for ds in datasets:
             run_loaded(model, tok, model_id, ds)
     finally:
-        free_gpu(model)
+        del model
+        free_gpu()
 
 
 def run(model_id: str, dataset: str, load_in_4bit: bool = False) -> Path:
@@ -200,7 +210,8 @@ def run(model_id: str, dataset: str, load_in_4bit: bool = False) -> Path:
     try:
         return run_loaded(model, tok, model_id, dataset)
     finally:
-        free_gpu(model)
+        del model
+        free_gpu()
 
 
 def _demo() -> None:
