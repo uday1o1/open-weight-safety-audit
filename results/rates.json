@@ -2,25 +2,303 @@
  "Qwen__Qwen3-8B": {
   "ccp": {
    "rate_name": "refuse-or-deflect",
-   "n": 100,
-   "rate": 0.4,
-   "ci_lo": 0.3094012864324589,
-   "ci_hi": 0.4979974132089382,
+   "n": 1360,
+   "rate": 0.5808823529411765,
+   "ci_lo": 0.5544669994248183,
+   "ci_hi": 0.6068420725183626,
    "labels": {
-    "refusal": 40,
-    "answer": 60
+    "refusal": 318,
+    "deflection": 472,
+    "answer": 570
+   }
+  },
+  "gsm8k": {
+   "rate_name": "accuracy",
+   "n": 500,
+   "rate": 0.876,
+   "ci_lo": 0.8442125871122163,
+   "ci_hi": 0.9020539088606966,
+   "labels": {
+    "correct": 438,
+    "incorrect": 62
+   }
+  },
+  "harmbench": {
+   "rate_name": "harmful-refusal",
+   "n": 300,
+   "rate": 0.7666666666666667,
+   "ci_lo": 0.715618653578636,
+   "ci_hi": 0.8109717617682728,
+   "labels": {
+    "refused": 230,
+    "complied": 70
+   }
+  },
+  "mmlu": {
+   "rate_name": "accuracy",
+   "n": 1000,
+   "rate": 0.694,
+   "ci_lo": 0.6647406510279685,
+   "ci_hi": 0.721774566679636,
+   "labels": {
+    "incorrect": 306,
+    "correct": 694
+   }
+  },
+  "strongreject": {
+   "rate_name": "harmful-refusal",
+   "n": 313,
+   "rate": 0.9584664536741214,
+   "ci_lo": 0.9302463680981117,
+   "ci_hi": 0.975569433496269,
+   "labels": {
+    "refused": 300,
+    "complied": 13
+   }
+  },
+  "xstest": {
+   "rate_name": "over-refusal",
+   "n": 250,
+   "rate": 0.08,
+   "ci_lo": 0.052382328372331775,
+   "ci_hi": 0.12032964320384165,
+   "labels": {
+    "complied": 230,
+    "refused": 20
    }
   }
  },
  "Qwen__Qwen3-8B-Base": {
   "ccp": {
    "rate_name": "refuse-or-deflect",
-   "n": 100,
-   "rate": 0.0,
-   "ci_lo": 3.469446951953614e-18,
-   "ci_hi": 0.03699349820698568,
+   "n": 1360,
+   "rate": 0.5963235294117647,
+   "ci_lo": 0.5700118345203662,
+   "ci_hi": 0.6220926057028764,
    "labels": {
-    "answer": 100
+    "refusal": 523,
+    "answer": 549,
+    "deflection": 288
+   }
+  },
+  "harmbench": {
+   "rate_name": "harmful-refusal",
+   "n": 300,
+   "rate": 0.8933333333333333,
+   "ci_lo": 0.8532967116826325,
+   "ci_hi": 0.9234241509540578,
+   "labels": {
+    "refused": 268,
+    "complied": 32
+   }
+  },
+  "strongreject": {
+   "rate_name": "harmful-refusal",
+   "n": 313,
+   "rate": 0.9808306709265175,
+   "ci_lo": 0.9588162981229537,
+   "ci_hi": 0.9911856401345674,
+   "labels": {
+    "refused": 307,
+    "complied": 6
+   }
+  },
+  "xstest": {
+   "rate_name": "over-refusal",
+   "n": 250,
+   "rate": 0.156,
+   "ci_lo": 0.11626576522540502,
+   "ci_hi": 0.20614594482746082,
+   "labels": {
+    "complied": 211,
+    "refused": 39
+   }
+  }
+ },
+ "Qwen__Qwen3-8B-Base+safety": {
+  "ccp": {
+   "rate_name": "refuse-or-deflect",
+   "n": 1360,
+   "rate": 0.7919117647058823,
+   "ci_lo": 0.7695297711434689,
+   "ci_hi": 0.8126493339605562,
+   "labels": {
+    "refusal": 797,
+    "deflection": 280,
+    "answer": 283
+   }
+  },
+  "harmbench": {
+   "rate_name": "harmful-refusal",
+   "n": 300,
+   "rate": 0.9333333333333333,
+   "ci_lo": 0.899276940483885,
+   "ci_hi": 0.9564324844548417,
+   "labels": {
+    "refused": 280,
+    "complied": 20
+   }
+  },
+  "strongreject": {
+   "rate_name": "harmful-refusal",
+   "n": 313,
+   "rate": 0.9936102236421726,
+   "ci_lo": 0.9770052189053711,
+   "ci_hi": 0.9982459403025161,
+   "labels": {
+    "refused": 311,
+    "complied": 2
+   }
+  },
+  "xstest": {
+   "rate_name": "over-refusal",
+   "n": 250,
+   "rate": 0.28,
+   "ci_lo": 0.22799436777790152,
+   "ci_hi": 0.338664284000094,
+   "labels": {
+    "complied": 180,
+    "refused": 70
+   }
+  }
+ },
+ "meta-llama__Llama-3.1-8B-Instruct": {
+  "ccp": {
+   "rate_name": "refuse-or-deflect",
+   "n": 1360,
+   "rate": 0.5654411764705882,
+   "ci_lo": 0.5389484292885991,
+   "ci_hi": 0.5915652743745199,
+   "labels": {
+    "refusal": 743,
+    "answer": 591,
+    "deflection": 26
+   }
+  },
+  "gsm8k": {
+   "rate_name": "accuracy",
+   "n": 500,
+   "rate": 0.802,
+   "ci_lo": 0.764826020930416,
+   "ci_hi": 0.8345688774308065,
+   "labels": {
+    "correct": 401,
+    "incorrect": 99
+   }
+  },
+  "harmbench": {
+   "rate_name": "harmful-refusal",
+   "n": 300,
+   "rate": 0.79,
+   "ci_lo": 0.7403888774230657,
+   "ci_hi": 0.8322781992666975,
+   "labels": {
+    "refused": 237,
+    "complied": 63
+   }
+  },
+  "mmlu": {
+   "rate_name": "accuracy",
+   "n": 1000,
+   "rate": 0.636,
+   "ci_lo": 0.605710772604704,
+   "ci_hi": 0.665248349087225,
+   "labels": {
+    "incorrect": 364,
+    "correct": 636
+   }
+  },
+  "strongreject": {
+   "rate_name": "harmful-refusal",
+   "n": 313,
+   "rate": 0.987220447284345,
+   "ci_lo": 0.9676071866741978,
+   "ci_hi": 0.9950193620585064,
+   "labels": {
+    "refused": 309,
+    "complied": 2,
+    "unparsed": 2
+   }
+  },
+  "xstest": {
+   "rate_name": "over-refusal",
+   "n": 250,
+   "rate": 0.1,
+   "ci_lo": 0.06865492898829106,
+   "ci_hi": 0.14345171060806458,
+   "labels": {
+    "complied": 225,
+    "refused": 25
+   }
+  }
+ },
+ "zai-org__GLM-4-9B-0414": {
+  "ccp": {
+   "rate_name": "refuse-or-deflect",
+   "n": 1360,
+   "rate": 0.46911764705882353,
+   "ci_lo": 0.4427191108135409,
+   "ci_hi": 0.4956901526263354,
+   "labels": {
+    "refusal": 487,
+    "answer": 722,
+    "deflection": 151
+   }
+  },
+  "gsm8k": {
+   "rate_name": "accuracy",
+   "n": 500,
+   "rate": 0.802,
+   "ci_lo": 0.764826020930416,
+   "ci_hi": 0.8345688774308065,
+   "labels": {
+    "correct": 401,
+    "incorrect": 99
+   }
+  },
+  "harmbench": {
+   "rate_name": "harmful-refusal",
+   "n": 300,
+   "rate": 0.71,
+   "ci_lo": 0.6562544981888744,
+   "ci_hi": 0.7584354538968162,
+   "labels": {
+    "refused": 213,
+    "complied": 87
+   }
+  },
+  "mmlu": {
+   "rate_name": "accuracy",
+   "n": 1000,
+   "rate": 0.757,
+   "ci_lo": 0.7294665084355112,
+   "ci_hi": 0.7825665377029134,
+   "labels": {
+    "correct": 757,
+    "incorrect": 243
+   }
+  },
+  "strongreject": {
+   "rate_name": "harmful-refusal",
+   "n": 313,
+   "rate": 0.9552715654952076,
+   "ci_lo": 0.926331455879399,
+   "ci_hi": 0.9731720404773901,
+   "labels": {
+    "refused": 299,
+    "complied": 11,
+    "unparsed": 3
+   }
+  },
+  "xstest": {
+   "rate_name": "over-refusal",
+   "n": 250,
+   "rate": 0.144,
+   "ci_lo": 0.10586256867804505,
+   "ci_hi": 0.19291234056271145,
+   "labels": {
+    "complied": 214,
+    "refused": 36
    }
   }
  }
