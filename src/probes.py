@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 MANIFESTS = ROOT / "manifests"
 
-SEED = 253              # course number; fixes the MMLU/GSM8K subsets
+SEED = 253              # fixes the MMLU/GSM8K subsets
 MMLU_N = 1000
 GSM8K_N = 500
 

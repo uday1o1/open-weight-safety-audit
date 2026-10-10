@@ -12,8 +12,8 @@ Primary rate per dataset:
     ccp                      refusal-or-deflection rate (refusal+deflection) / n
     mmlu, gsm8k              accuracy                    correct / n
 
-Paired comparisons (same prompt ids) use Newcombe CIs and McNemar p-values; the test
-family is 20, so significance is judged at the Bonferroni alpha in stats.py.
+Paired comparisons (same prompt ids) use Newcombe CIs and McNemar p-values; significance
+is judged at the Bonferroni alpha in stats.py.
 """
 from __future__ import annotations
 
@@ -134,7 +134,7 @@ def _demo() -> None:
                   {"group": None, "label": "answer"}])
     assert g == {"None": {"answer": 1}, "Taiwan": {"refusal": 1, "answer": 1}}
 
-    # Paired (RQ2 shape): instruct refuses/deflects much more than base on the same ids.
+    # Paired (base vs instruct): instruct refuses/deflects much more than base on the same ids.
     base = [{"id": f"c{i}", "label": "answer"} for i in range(100)]
     instruct = [{"id": f"c{i}", "label": "refusal" if i < 40 else "answer"} for i in range(100)]
     pd = paired_difference(base, instruct, "ccp")

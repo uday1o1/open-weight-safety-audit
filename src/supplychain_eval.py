@@ -1,4 +1,4 @@
-"""RQ3: measure how reliably the supply-chain detectors flag tampering.
+"""Measure how reliably the supply-chain detectors flag tampering.
 
 For each detector, build a set of clean artifacts (what a legitimate download looks like)
 and a set of tampered ones (the attack), run the detector, and report detection rate on

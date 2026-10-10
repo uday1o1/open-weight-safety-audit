@@ -1,11 +1,11 @@
-"""Supply-chain tamper detectors (RQ3).
+"""Supply-chain tamper detectors.
 
-Four local, offline checks, one per path in the risk register:
+Four local, offline checks, one per tampering path:
 
-    verify_checksum        R1/R7  downloaded file matches the publisher's hash
-    scan_pickle            R5     serialized model file would run code on load
-    chat_template_diff     R6     bundled chat template differs from upstream
-    listening_inference_servers  R8  a local model server is reachable off-loopback
+    verify_checksum              downloaded file matches the publisher's hash
+    scan_pickle                  serialized model file would run code on load
+    chat_template_diff           bundled chat template differs from upstream
+    listening_inference_servers  a local model server is reachable off-loopback
 
 Each is a detector whose reliability is measured by running it over clean and
 tampered samples and reporting a false-positive rate; none inspects a remote host.

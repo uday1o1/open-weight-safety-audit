@@ -2,8 +2,8 @@
 
 Single rates use the Wilson score interval; paired before/after differences use
 Newcombe's method 10 (Wilson-based) for the CI and McNemar's test for significance.
-All defaults are two-sided 95% with a Bonferroni-adjusted alpha for the 20-test
-family (6 outcomes x 3 models + 2 base-vs-instruct), so alpha = 0.05/20 = 0.0025.
+All defaults are two-sided 95%. Significance uses a Bonferroni-adjusted alpha over the
+8 paired base-vs-instruct tests (4 probe sets x 2 base prompt conditions): 0.05/8.
 
 Refs: Wilson 1927; Newcombe 1998 (Statist. Med. 17:2635-2650, method 10); McNemar 1947.
 """
@@ -14,8 +14,8 @@ from math import sqrt
 
 from scipy.stats import norm, binomtest
 
-FAMILY_SIZE = 20
-BONFERRONI_ALPHA = 0.05 / FAMILY_SIZE  # 0.0025
+FAMILY_SIZE = 8
+BONFERRONI_ALPHA = 0.05 / FAMILY_SIZE  # 0.00625
 
 
 @dataclass(frozen=True)
@@ -159,7 +159,7 @@ def _demo() -> None:
     assert abs(mcnemar_exact(1, 9) - 2 * 11 / 1024) < 1e-9
 
     assert significant(0.001) and not significant(0.01)
-    assert abs(BONFERRONI_ALPHA - 0.0025) < 1e-12
+    assert abs(BONFERRONI_ALPHA - 0.00625) < 1e-12
 
     # Cohen's kappa: perfect agreement -> 1; chance-level -> ~0.
     assert cohens_kappa(["a", "b", "c"], ["a", "b", "c"]) == 1.0

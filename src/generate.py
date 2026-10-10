@@ -3,7 +3,7 @@
 Runs on the GPU box (lazy-imports torch/transformers so this module loads without them).
 Batched greedy decoding keeps a single 24 GB GPU sufficient. Instruction-tuned models
 use their chat template (Qwen3 with thinking mode off); the Qwen3 base model is prompted
-with the URIAL in-context alignment template for the RQ2 pretraining comparison. The same
+with the URIAL in-context alignment template for the base-vs-instruct comparison. The same
 harness serves judge models (judging is generation with a judge prompt), and can load a
 large judge in 4-bit.
 
@@ -29,9 +29,9 @@ MAX_NEW_TOKENS = {
 }
 BATCH = int(os.environ.get("AUDIT_BATCH", "16"))
 
-# URIAL in-context alignment prompts for the base model (RQ2), Re-Align/URIAL commit b3d6f523.
+# URIAL in-context alignment prompts for the base model, Re-Align/URIAL commit b3d6f523.
 # "help" (inst_1k_v4.help.txt) has no safety instruction and no refusal example, so any
-# refusal it produces comes from the base model itself: the primary RQ2 condition.
+# refusal it produces comes from the base model itself: the primary base condition.
 # "safety" (inst_1k_v4.txt) tells the model it may "reject to answer some controversial
 # topics" and shows a refusal example: a sensitivity condition, selected with a "+safety"
 # suffix on the model id (e.g. "Qwen/Qwen3-8B-Base+safety").

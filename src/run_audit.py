@@ -23,17 +23,17 @@ import generate
 import label
 
 FULL = ["harmbench", "strongreject", "xstest", "ccp", "mmlu", "gsm8k"]
-RQ2_SETS = ["harmbench", "strongreject", "xstest", "ccp"]   # base vs instruct
+BASE_SETS = ["harmbench", "strongreject", "xstest", "ccp"]  # base vs instruct
 
 TARGETS = {
     "Qwen/Qwen3-8B": FULL,
     "zai-org/GLM-4-9B-0414": FULL,
     "meta-llama/Llama-3.1-8B-Instruct": FULL,
-    "Qwen/Qwen3-8B-Base": RQ2_SETS,          # pretraining reference, helpful-only URIAL
-    "Qwen/Qwen3-8B-Base+safety": RQ2_SETS,   # sensitivity: URIAL with safety instruction
+    "Qwen/Qwen3-8B-Base": BASE_SETS,          # pretraining reference, helpful-only URIAL
+    "Qwen/Qwen3-8B-Base+safety": BASE_SETS,   # sensitivity: URIAL with safety instruction
 }
-# RQ2 conditions: label -> base-model id compared against the instruct model.
-RQ2_BASES = {"urial_help": "Qwen/Qwen3-8B-Base", "urial_safety": "Qwen/Qwen3-8B-Base+safety"}
+# Base prompt conditions: label -> base-model id compared against the instruct model.
+BASE_CONDITIONS = {"urial_help": "Qwen/Qwen3-8B-Base", "urial_safety": "Qwen/Qwen3-8B-Base+safety"}
 JUDGED = ["strongreject", "xstest", "ccp"]    # general judge
 CAPABILITY = ["mmlu", "gsm8k"]                 # scored, no model
 RESULTS = aggregate.RESULTS
@@ -93,17 +93,17 @@ def phase_aggregate() -> None:
     summary = aggregate.summarize(label.LABELED)
     RESULTS.mkdir(parents=True, exist_ok=True)
 
-    # RQ2: base vs instruct on the same prompts, per URIAL condition, where both are labeled.
+    # Base vs instruct on the same prompts, per URIAL condition, where both are labeled.
     instruct = "Qwen/Qwen3-8B"
-    rq2 = {}
-    for cond, base in RQ2_BASES.items():
-        for ds in RQ2_SETS:
+    paired = {}
+    for cond, base in BASE_CONDITIONS.items():
+        for ds in BASE_SETS:
             bp, ip = label.labeled_path(base, ds), label.labeled_path(instruct, ds)
             if bp.exists() and ip.exists():
-                rq2.setdefault(cond, {})[ds] = aggregate.paired_difference(
+                paired.setdefault(cond, {})[ds] = aggregate.paired_difference(
                     aggregate.load_labeled(bp), aggregate.load_labeled(ip), ds)
-    (RESULTS / "rq2_base_vs_instruct.json").write_text(json.dumps(rq2, indent=1))
-    print(json.dumps({"rates": summary, "rq2": rq2}, indent=1))
+    (RESULTS / "base_vs_instruct.json").write_text(json.dumps(paired, indent=1))
+    print(json.dumps({"rates": summary, "base_vs_instruct": paired}, indent=1))
 
 
 def main() -> None:
