@@ -86,7 +86,7 @@ def paired_difference(a: list[dict], b: list[dict], dataset: str) -> dict:
 def judge_agreement(auto: list[str], hand: list[str]) -> dict:
     """Cohen's kappa for the political judge vs hand labels; gate at 0.6 (report rule)."""
     k = cohens_kappa(auto, hand)
-    return {"kappa": k, "passes": k >= 0.6, "n": len(hand)}
+    return {"kappa": k, "passes": bool(k >= 0.6), "n": len(hand)}
 
 
 def summarize(outputs_dir: str | Path = ROOT / "outputs") -> dict:

@@ -102,7 +102,7 @@ def mcnemar_exact(b: int, c: int) -> float:
 
 
 def significant(p: float, alpha: float = BONFERRONI_ALPHA) -> bool:
-    return p < alpha
+    return bool(p < alpha)    # scipy p-values are numpy floats; np.bool_ breaks json.dumps
 
 
 def cohens_kappa(rater_a: list, rater_b: list) -> float:
@@ -125,6 +125,9 @@ def cohens_kappa(rater_a: list, rater_b: list) -> float:
 
 
 def _demo() -> None:
+    import json
+    assert json.dumps(significant(mcnemar_exact(20, 2)))  # result must be JSON-serializable
+
     # Wilson: known textbook value for 0/10 upper bound ~= 0.278 (Agresti-Coull family).
     w = wilson(0, 10)
     assert w.point == 0.0 and w.lo == 0.0 and abs(w.hi - 0.278) < 0.005, w

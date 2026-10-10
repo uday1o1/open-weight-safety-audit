@@ -29,9 +29,14 @@ MAX_NEW_TOKENS = {
 }
 BATCH = int(os.environ.get("AUDIT_BATCH", "16"))
 
-# URIAL in-context alignment prompt for the base model (RQ2).
-# Source: Re-Align/URIAL, urial_prompts/inst_1k_v4.txt, commit b3d6f523644fcd6592f90c4344b3615d4c4db30c.
-URIAL_URL = "https://raw.githubusercontent.com/Re-Align/URIAL/b3d6f523644fcd6592f90c4344b3615d4c4db30c/urial_prompts/inst_1k_v4.txt"
+# URIAL in-context alignment prompts for the base model (RQ2), Re-Align/URIAL commit b3d6f523.
+# "help" (inst_1k_v4.help.txt) has no safety instruction and no refusal example, so any
+# refusal it produces comes from the base model itself: the primary RQ2 condition.
+# "safety" (inst_1k_v4.txt) tells the model it may "reject to answer some controversial
+# topics" and shows a refusal example: a sensitivity condition, selected with a "+safety"
+# suffix on the model id (e.g. "Qwen/Qwen3-8B-Base+safety").
+URIAL_ROOT = "https://raw.githubusercontent.com/Re-Align/URIAL/b3d6f523644fcd6592f90c4344b3615d4c4db30c/urial_prompts/"
+URIAL_FILES = {"help": "inst_1k_v4.help.txt", "safety": "inst_1k_v4.txt"}
 
 
 def model_slug(model_id: str) -> str:
@@ -70,16 +75,26 @@ def build_record(model_id: str, probe, completion: str) -> dict:
     }
 
 
+def hf_id(model_id: str) -> str:
+    """Hugging Face repo id, without a condition suffix like "+safety"."""
+    return model_id.split("+")[0]
+
+
+def urial_variant(model_id: str) -> str:
+    return "safety" if model_id.endswith("+safety") else "help"
+
+
 def is_base_model(model_id: str) -> bool:
-    return model_id.lower().rstrip("/").endswith("-base")
+    return hf_id(model_id).lower().rstrip("/").endswith("-base")
 
 
-def _urial_template() -> str:
+def _urial_template(variant: str = "help") -> str:
     CACHE.mkdir(parents=True, exist_ok=True)
-    cache = CACHE / "urial_inst_1k_v4.txt"
+    name = URIAL_FILES[variant]
+    cache = CACHE / f"urial_{name}"
     if not cache.exists():
         import time
-        req = urllib.request.Request(URIAL_URL, headers={"User-Agent": "audit/1.0"})
+        req = urllib.request.Request(URIAL_ROOT + name, headers={"User-Agent": "audit/1.0"})
         for i in range(6):                           # retry/backoff: transient SSL/network blip
             try:
                 with urllib.request.urlopen(req, timeout=120) as r:
@@ -93,9 +108,9 @@ def _urial_template() -> str:
     return cache.read_text()
 
 
-def render_base(query: str) -> str:
+def render_base(query: str, variant: str = "help") -> str:
     """URIAL prompt: the system preamble and in-context examples, then this query."""
-    return _urial_template() + f"\n# Query:\n```\n{query}\n```\n\n# Answer:\n```\n"
+    return _urial_template(variant) + f"\n# Query:\n```\n{query}\n```\n\n# Answer:\n```\n"
 
 
 # ---------- box-side: model loading and batched generation ----------
@@ -103,6 +118,7 @@ def load_model(model_id: str, dtype: str = "bfloat16", load_in_4bit: bool = Fals
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
+    model_id = hf_id(model_id)                      # "+safety" etc. selects a prompt, not weights
     tok = AutoTokenizer.from_pretrained(model_id)
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
@@ -122,7 +138,7 @@ def load_model(model_id: str, dtype: str = "bfloat16", load_in_4bit: bool = Fals
 def render_prompt(tok, text: str, model_id: str) -> str:
     """Chat template for instruct models (Qwen3 thinking off); URIAL for the base model."""
     if is_base_model(model_id):
-        return render_base(text)
+        return render_base(text, urial_variant(model_id))
     messages = [{"role": "user", "content": text}]
     kwargs = {"tokenize": False, "add_generation_prompt": True}
     if "qwen3" in model_id.lower():
@@ -142,6 +158,26 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int) -> list
     texts = tok.batch_decode(gen, skip_special_tokens=True)
     # Base-model completions run until the closing fence; cut there.
     return [t.split("```")[0].split("# Query:")[0].strip() for t in texts]
+
+
+# MMLU: 0-shot, answer read from the restricted next-token distribution over A-D (the
+# method behind Meta's reported "MMLU 0-shot"). Free generation lets chat models start
+# reasoning and never emit a letter within a short budget. The format instruction is
+# appended at render time so the hash-frozen probe text is unchanged.
+MMLU_SUFFIX = "\n\nAnswer with only the letter (A, B, C, or D) of the correct option."
+
+
+def choose_letter(model, tok, rendered: list[str]) -> list[str]:
+    import torch
+
+    # Each letter may tokenize with or without a leading space; take the best variant.
+    ids = {L: sorted({tok.encode(v, add_special_tokens=False)[0] for v in (L, " " + L)})
+           for L in "ABCD"}
+    inputs = tok(rendered, return_tensors="pt", padding=True).to(model.device)
+    with torch.no_grad():
+        logits = model(**inputs).logits[:, -1, :]          # left-padded: last = next token
+    scores = torch.stack([logits[:, ids[L]].max(dim=-1).values for L in "ABCD"], dim=-1)
+    return ["ABCD"[i] for i in scores.argmax(dim=-1).tolist()]
 
 
 def free_gpu() -> None:
@@ -172,10 +208,12 @@ def run_loaded(model, tok, model_id: str, dataset: str) -> Path:
     done = 0
     for start in range(0, len(todo), BATCH):
         chunk = todo[start:start + BATCH]
+        suffix = MMLU_SUFFIX if dataset == "mmlu" else ""
         rendered = [render_prompt(
-            tok, (f"{p.context}\n\n{p.prompt}" if p.context else p.prompt), model_id)
+            tok, (f"{p.context}\n\n{p.prompt}" if p.context else p.prompt) + suffix, model_id)
             for p in chunk]
-        completions = generate_batch(model, tok, rendered, maxn)
+        completions = (choose_letter(model, tok, rendered) if dataset == "mmlu"
+                       else generate_batch(model, tok, rendered, maxn))
         for p, c in zip(chunk, completions):
             append_record(path, build_record(model_id, p, c))
         done += len(chunk)
@@ -221,6 +259,11 @@ def _demo() -> None:
     assert model_slug("Qwen/Qwen3-8B") == "Qwen__Qwen3-8B"
     assert output_path("Qwen/Qwen3-8B", "mmlu").name == "mmlu.jsonl"
     assert is_base_model("Qwen/Qwen3-8B-Base") and not is_base_model("Qwen/Qwen3-8B")
+    assert is_base_model("Qwen/Qwen3-8B-Base+safety")
+    assert hf_id("Qwen/Qwen3-8B-Base+safety") == "Qwen/Qwen3-8B-Base"
+    assert urial_variant("Qwen/Qwen3-8B-Base+safety") == "safety"
+    assert urial_variant("Qwen/Qwen3-8B-Base") == "help"
+    assert model_slug("Qwen/Qwen3-8B-Base+safety") == "Qwen__Qwen3-8B-Base+safety"
 
     with tempfile.TemporaryDirectory() as d:
         p = Path(d) / "out.jsonl"
