@@ -115,7 +115,19 @@ def summarize(outputs_dir: str | Path = ROOT / "outputs") -> dict:
         }
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "rates.json").write_text(json.dumps(summary, indent=1))
+    write_item_labels(outputs_dir)
     return summary
+
+
+def write_item_labels(outputs_dir: str | Path) -> None:
+    """Per-item labels (id + label, no text) so paired tests can be recomputed offline."""
+    for path in sorted(Path(outputs_dir).glob("*/*.jsonl")):
+        if path.stem not in POSITIVE:
+            continue
+        out = RESULTS / "labels" / path.parent.name / path.name
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text("".join(json.dumps({"id": r["id"], "label": r["label"]}) + "\n"
+                               for r in load_labeled(path)))
 
 
 def _demo() -> None:
