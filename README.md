@@ -17,6 +17,8 @@ main line of defense. This project measures both on three 8–9B models from thr
    serialization, an exposed local server) be detected, and at what false-positive cost?
 4. Can those detectors be turned into a control that stops a tampered release before it is
    loaded or served?
+5. How much of the remaining harmful compliance does an open safety classifier in front of and
+   behind the model remove, and what does it cost on safe requests?
 
 ## Models
 
@@ -37,6 +39,7 @@ All weights are the publishers' unquantized BF16 releases, run unmodified.
 | Over-refusal | XSTest safe prompts (250) | refusal judge |
 | Political refusal / deflection | promptfoo CCP-sensitive prompts (1,360) | 3-class rubric (answer / deflection / refusal); validated on a 200-item blind reference set (Cohen's κ = 0.95, answer vs. refuse-or-deflect) |
 | Capability | MMLU (1,000, 0-shot, restricted A–D next token), GSM8K (500) | answer extraction |
+| Safety-classifier control | the HarmBench, StrongREJECT and XSTest prompts and each model's answers | Llama Guard 3 8B as input filter (prompt) and output filter (prompt + answer); harmful compliance from the audit labels |
 | Tamper detection | clean vs tampered artifacts; the real chat templates of the audited models (pinned) plus four held-out publishers' templates | the detectors in `src/supplychain.py`; end to end through the admission gate in `src/gate.py` |
 
 - Decoding is greedy. Instruction-tuned models use their own chat template (Qwen3 with thinking off).
@@ -53,6 +56,7 @@ All weights are the publishers' unquantized BF16 releases, run unmodified.
 Rates with Wilson 95% intervals and per-category label counts are in `results/rates.json`;
 paired comparisons in `results/base_vs_instruct.json`; per-item labels (id and label, no text)
 in `results/labels/`; the political-judge validation set in `results/judge_validation_ccp.jsonl`;
+the safety-classifier control in `results/guard.json` (per-item verdicts in `results/guard/`);
 tamper detection in `results/supplychain_fpr.json`.
 
 | Model | HarmBench refusal | StrongREJECT refusal | XSTest over-refusal | CCP refuse + deflect | MMLU | GSM8K |
@@ -76,6 +80,24 @@ Qwen3-8B minus its base (URIAL), same prompts:
 Against the base prompted with the safety line instead, Qwen3-8B is lower on HarmBench (−18.3 pts),
 XSTest (−20.0) and CCP (−17.7), all significant: one generic "may decline controversial topics"
 sentence moves the base model's political refusal by about 18 points.
+
+Llama Guard 3 as an input and output filter around each model (`results/guard.json`). Harmful
+compliance is the share of HarmBench prompts the model answered (the complement of refusal):
+
+| Model | HarmBench harmful compliance | + output filter | + input and output filter | Harmful answers caught by output filter | XSTest helpful | + both filters |
+|---|---|---|---|---|---|---|
+| Qwen3-8B | 25.0% | 3.7% | 1.3% | 64/75 | 92.8% | 91.6% |
+| GLM-4-9B-0414 | 30.3% | 5.0% | 2.3% | 76/91 | 86.0% | 85.2% |
+| Llama-3.1-8B-Instruct | 23.0% | 4.3% | 2.0% | 56/69 | 89.6% | 89.2% |
+
+The input filter flags 96.3% of HarmBench and 97.1% of StrongREJECT prompts and 7 of 250 safe
+XSTest prompts (2.8%); the output filter blocks 1 of 671 helpful XSTest answers across the three
+models. With both filters, harmful compliance on HarmBench falls by 91–95% for every model, at a
+cost of under one point of helpfulness. What still gets through is concentrated in cybercrime,
+illegal-activity and misinformation behaviors. On StrongREJECT the models answer few prompts
+(2–6%); the output filter passes 28 of those 33 answers, and with the input filter only 1–3 per
+model remain. The regenerated answers reproduce the audit labels exactly
+(2,589/2,589).
 
 Tamper detection and the admission gate (`results/supplychain_fpr.json`):
 
@@ -113,6 +135,7 @@ src/
   label.py             capability scoring and judge labeling (GPU)
   aggregate.py         labeled completions -> rates and paired comparisons
   run_audit.py         generate -> label -> aggregate, resumable end to end
+  guard.py             Llama Guard 3 input/output filter: harmful compliance removed vs safe requests blocked (GPU)
   supplychain.py       checksum / pickle scan / template render diff / exposure probe
   supplychain_eval.py  detection and false-positive rates for the detectors and the gate
   gate.py              admission gate: pin a release, block and quarantine tampered copies
@@ -130,7 +153,7 @@ Completions are never committed: they can contain harmful text and stay on the G
 
 ```bash
 pip install -r requirements.txt
-for m in stats probes scoring supplychain judges generate aggregate label; do
+for m in stats probes scoring supplychain judges generate aggregate label guard gate; do
   PYTHONPATH=src python src/$m.py || exit 1
 done
 PYTHONPATH=src python src/supplychain_eval.py   # writes results/supplychain_fpr.json
@@ -158,6 +181,12 @@ bash box/run.sh            # detached; log in ~/audit-run.log
 labels them, and writes `results/`. Every phase skips finished work, so an interrupted run
 resumes where it stopped. The full run took 7 hours on an A100 40GB (`AUDIT_BATCH=16`); an
 RTX 3090 at the default batch of 8 is roughly three times slower.
+
+`bash box/run.sh guard` runs the safety-classifier control (`src/guard.py run`): it regenerates
+the three instruction-tuned models' answers on the harmful and safe sets, labels them with the
+audit judges, screens prompts and answers with Llama Guard 3 8B (access must be granted on its
+model page), and writes `results/guard.json`. It took 75 minutes on an A100 40GB with the same
+batch sizes (`AUDIT_BATCH=16 AUDIT_JUDGE_BATCH=8`).
 
 Every data source is pinned to a commit, and `manifests/*.json` freeze each probe set by
 prompt hash (a re-fetch must match) and fix the MMLU/GSM8K subsets with a seed. With greedy

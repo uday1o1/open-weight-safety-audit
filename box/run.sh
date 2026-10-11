@@ -17,6 +17,8 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True   # reduce fragmentation
 export PYTHONPATH="$REPO_DIR/src"
 LOG="$HOME/audit-run.log"
 cd "$REPO_DIR"
-setsid nohup python -u src/run_audit.py "${1:-all}" >"$LOG" 2>&1 &
+# "guard" runs the Llama Guard filter measurement; anything else is a run_audit phase.
+if [ "${1:-all}" = guard ]; then CMD=(src/guard.py run); else CMD=(src/run_audit.py "${1:-all}"); fi
+setsid nohup python -u "${CMD[@]}" >"$LOG" 2>&1 &
 disown
-echo "started run_audit (${1:-all}); log: $LOG"
+echo "started ${CMD[*]}; log: $LOG"
