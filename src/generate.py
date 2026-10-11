@@ -146,7 +146,15 @@ def render_prompt(tok, text: str, model_id: str) -> str:
     return tok.apply_chat_template(messages, **kwargs)
 
 
-def generate_batch(model, tok, rendered: list[str], max_new_tokens: int) -> list[str]:
+def clean_completion(text: str, base: bool) -> str:
+    """URIAL answers end at the closing fence; chat answers keep their code blocks."""
+    if base:
+        return text.split("```")[0].split("# Query:")[0].strip()
+    return text.strip()
+
+
+def generate_batch(model, tok, rendered: list[str], max_new_tokens: int,
+                   base: bool = False) -> list[str]:
     import torch
 
     inputs = tok(rendered, return_tensors="pt", padding=True, truncation=True,
@@ -156,8 +164,7 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int) -> list
                              pad_token_id=tok.pad_token_id)
     gen = out[:, inputs.input_ids.shape[1]:]
     texts = tok.batch_decode(gen, skip_special_tokens=True)
-    # Base-model completions run until the closing fence; cut there.
-    return [t.split("```")[0].split("# Query:")[0].strip() for t in texts]
+    return [clean_completion(t, base) for t in texts]
 
 
 # MMLU: 0-shot, answer read from the restricted next-token distribution over A-D (the
@@ -213,7 +220,7 @@ def run_loaded(model, tok, model_id: str, dataset: str) -> Path:
             tok, (f"{p.context}\n\n{p.prompt}" if p.context else p.prompt) + suffix, model_id)
             for p in chunk]
         completions = (choose_letter(model, tok, rendered) if dataset == "mmlu"
-                       else generate_batch(model, tok, rendered, maxn))
+                       else generate_batch(model, tok, rendered, maxn, is_base_model(model_id)))
         for p, c in zip(chunk, completions):
             append_record(path, build_record(model_id, p, c))
         done += len(chunk)
@@ -264,6 +271,9 @@ def _demo() -> None:
     assert urial_variant("Qwen/Qwen3-8B-Base+safety") == "safety"
     assert urial_variant("Qwen/Qwen3-8B-Base") == "help"
     assert model_slug("Qwen/Qwen3-8B-Base+safety") == "Qwen__Qwen3-8B-Base+safety"
+    code = "Here is a script:\n```python\nprint(1)\n```"
+    assert clean_completion(code, base=False) == code
+    assert clean_completion("An answer.\n```\n\n# Query:\nnext", base=True) == "An answer."
 
     with tempfile.TemporaryDirectory() as d:
         p = Path(d) / "out.jsonl"
