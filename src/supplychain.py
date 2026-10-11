@@ -4,7 +4,7 @@ Four local, offline checks, one per tampering path:
 
     verify_checksum              downloaded file matches the publisher's hash
     scan_pickle                  serialized model file would run code on load
-    chat_template_diff           bundled chat template differs from upstream
+    template_render_diff         bundled chat template renders differently from upstream
     listening_inference_servers  a local model server is reachable off-loopback
 
 Each is a detector whose reliability is measured by running it over clean and
@@ -15,6 +15,7 @@ from __future__ import annotations
 import difflib
 import hashlib
 import io
+import json
 import socket
 from dataclasses import dataclass
 from pathlib import Path
@@ -96,6 +97,77 @@ def chat_template_diff(local: str, upstream: str) -> str:
     return "\n".join(difflib.unified_diff(
         upstream.splitlines(), local.splitlines(),
         fromfile="upstream", tofile="local", lineterm=""))
+
+
+# A text diff flags harmless edits (comments, spacing inside tags). What matters is whether
+# the template turns the same conversation into a different prompt, so render both the way
+# Hugging Face does (sandboxed Jinja, trim/lstrip blocks) on fixed probe conversations.
+# Each probe exercises a different branch: system prompt, multi-turn, closed turn, the
+# tool-calling path, and the no-thinking switch (how Qwen3 is run in this audit). A change
+# confined to a branch no probe reaches would go unseen, so every branch needs a probe.
+_TOOL = {"type": "function", "function": {
+    "name": "get_time", "description": "Current time in a city.",
+    "parameters": {"type": "object", "properties": {"city": {"type": "string"}},
+                   "required": ["city"]}}}
+PROBE_CONVERSATIONS = {
+    "single_turn": ([{"role": "user", "content": "Hello."}], True, {}),
+    "with_system": ([{"role": "system", "content": "Be concise."},
+                     {"role": "user", "content": "What is 2+2?"},
+                     {"role": "assistant", "content": "4."},
+                     {"role": "user", "content": "And 3+3?"}], True, {}),
+    "closed_turn": ([{"role": "user", "content": "Hi."},
+                     {"role": "assistant", "content": "Hello!"}], False, {}),
+    "with_tools": ([{"role": "user", "content": "Time in Paris?"}], True, {"tools": [_TOOL]}),
+    "tools_in_system": ([{"role": "user", "content": "Time in Paris?"}], True,
+                        {"tools": [_TOOL], "tools_in_user_message": False}),     # Llama 3.1 switch
+    "no_thinking": ([{"role": "user", "content": "Hello."}], True, {"enable_thinking": False}),
+}
+
+
+def _jinja_env():
+    from jinja2.sandbox import ImmutableSandboxedEnvironment
+
+    def raise_exception(msg):
+        raise ValueError(msg)
+
+    env = ImmutableSandboxedEnvironment(trim_blocks=True, lstrip_blocks=True,
+                                        extensions=["jinja2.ext.loopcontrols"])
+    env.filters["tojson"] = lambda x, indent=None, ensure_ascii=False, separators=None, \
+        sort_keys=False: json.dumps(x, indent=indent, ensure_ascii=ensure_ascii,
+                                    separators=separators, sort_keys=sort_keys)
+    env.globals["raise_exception"] = raise_exception
+    env.globals["strftime_now"] = lambda fmt: "01 Jan 2026"     # fixed: renders must be comparable
+    return env
+
+
+def render_template(template: str, messages: list[dict], add_generation_prompt: bool,
+                    extra: dict | None = None) -> str:
+    try:
+        return _jinja_env().from_string(template).render(
+            messages=messages, add_generation_prompt=add_generation_prompt,
+            bos_token="<bos>", eos_token="<eos>", **(extra or {}))
+    except Exception as e:                       # a template that now fails is also a change
+        return f"<render error: {type(e).__name__}: {e}>"
+
+
+def template_render_diff(local: str, upstream: str) -> list[str]:
+    """Probe conversations whose rendered prompt differs; [] if the templates behave the same."""
+    return [name for name, (msgs, gen, extra) in PROBE_CONVERSATIONS.items()
+            if render_template(local, msgs, gen, extra) != render_template(upstream, msgs, gen, extra)]
+
+
+def load_chat_template(model_dir: str | Path) -> str | None:
+    """The template a runtime would use: chat_template.jinja, else tokenizer_config.json."""
+    d = Path(model_dir)
+    if (d / "chat_template.jinja").exists():
+        return (d / "chat_template.jinja").read_text()
+    cfg = d / "tokenizer_config.json"
+    if not cfg.exists():
+        return None
+    t = json.loads(cfg.read_text()).get("chat_template")
+    if isinstance(t, list):                      # named templates: use "default"
+        t = next((x["template"] for x in t if x.get("name") == "default"), None)
+    return t
 
 
 # ---------- exposed local inference server ----------
@@ -184,6 +256,10 @@ def _demo() -> None:
     tampered = base + "{{ '\\n[system override]' }}"
     d = chat_template_diff(tampered, base)
     assert d and "system override" in d
+    # Render diff: a comment or extra spacing inside a tag is not a behavior change; an
+    # injected instruction is.
+    assert template_render_diff("{# reviewed #}" + base.replace("{% for", "{%  for"), base) == []
+    assert template_render_diff(tampered, base) == list(PROBE_CONVERSATIONS)
 
     # Exposure probe: bind a socket to loopback on an unused port, confirm it reads as
     # on-loopback and not exposed; an unbound port must not appear at all.

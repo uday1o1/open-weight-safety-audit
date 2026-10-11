@@ -15,6 +15,8 @@ main line of defense. This project measures both on three 8–9B models from thr
    pretraining?
 3. How reliably can supply-chain tampering (checksum mismatch, altered chat template, unsafe
    serialization, an exposed local server) be detected, and at what false-positive cost?
+4. Can those detectors be turned into a control that stops a tampered release before it is
+   loaded or served?
 
 ## Models
 
@@ -35,7 +37,7 @@ All weights are the publishers' unquantized BF16 releases, run unmodified.
 | Over-refusal | XSTest safe prompts (250) | refusal judge |
 | Political refusal / deflection | promptfoo CCP-sensitive prompts (1,360) | 3-class rubric (answer / deflection / refusal); validated on a 200-item blind reference set (Cohen's κ = 0.95, answer vs. refuse-or-deflect) |
 | Capability | MMLU (1,000, 0-shot, restricted A–D next token), GSM8K (500) | answer extraction |
-| Tamper detection | synthetic clean vs tampered artifacts | the detectors in `src/supplychain.py` |
+| Tamper detection | clean vs tampered artifacts; the real chat templates of the audited models (pinned) plus four held-out publishers' templates | the detectors in `src/supplychain.py`; end to end through the admission gate in `src/gate.py` |
 
 - Decoding is greedy. Instruction-tuned models use their own chat template (Qwen3 with thinking off).
 - The base model is prompted with URIAL (`inst_1k_v4.help.txt`, no safety instruction), so any
@@ -70,13 +72,34 @@ Qwen3-8B minus its base (URIAL), same prompts:
 | XSTest | −8.8 pts | [−13.4, −3.9] | 3.1e-4 | yes |
 | CCP | −0.4 pts | [−2.6, +1.8] | 0.79 | no |
 
-Tamper detection: the pickle scanner flagged 100/100 code-executing checkpoints with 0/200
-false positives on clean PyTorch-style checkpoints; the chat-template diff flagged 8/8 altered
-templates with 0/8 false positives.
 
 Against the base prompted with the safety line instead, Qwen3-8B is lower on HarmBench (−18.3 pts),
 XSTest (−20.0) and CCP (−17.7), all significant: one generic "may decline controversial topics"
 sentence moves the base model's political refusal by about 18 points.
+
+Tamper detection and the admission gate (`results/supplychain_fpr.json`):
+
+| Detector | Detected | False positives |
+|---|---|---|
+| Pickle code-execution scan | 100/100 gadgets (4 gadgets × 5 placements × 5 protocols) | 0/200 clean checkpoints |
+| Checksum vs pinned SHA-256 | 200/200 one-bit flips, truncations, appends | 0/200 |
+| Template render diff, audited models' templates | 15/15 injections | 0/12 harmless edits |
+| Template render diff, held-out templates (4 publishers) | 16/17 injections | 0/16 harmless edits |
+| Template text diff (baseline) | 15/15 | 12/12 harmless edits |
+| Exposed inference server probe | 20/20 bound to all interfaces | 0/20 bound to loopback |
+
+A plain text diff flags every harmless edit, so the template check renders each template on
+probe conversations covering its branches (system prompt, multi-turn, tools, no-thinking) and
+compares the resulting prompts. The one held-out miss sits in a document-retrieval branch no
+probe reaches; inside the gate the same edit is still caught by the checksum.
+
+The gate (`src/gate.py`) pins a trusted release and admits a copy only if every file hash,
+pickle scan and template render matches; otherwise it blocks and quarantines it. Over 20
+pinned releases it admitted 20/20 clean copies and blocked 20/20 for each attack: modified
+weights, a smuggled pickle, an injected template, and a payload inside a pinned pickle file.
+Every audited release publishes a SHA-256 for 100% of its weight files; Llama-3.1-8B-Instruct
+also ships a pickle checkpoint (`original/consolidated.00.pth`), which the gate scans on every
+load.
 
 ## Repository layout
 
@@ -90,8 +113,10 @@ src/
   label.py             capability scoring and judge labeling (GPU)
   aggregate.py         labeled completions -> rates and paired comparisons
   run_audit.py         generate -> label -> aggregate, resumable end to end
-  supplychain.py       checksum / pickle scan / template diff / exposure probe
-  supplychain_eval.py  detection and false-positive rates for the detectors
+  supplychain.py       checksum / pickle scan / template render diff / exposure probe
+  supplychain_eval.py  detection and false-positive rates for the detectors and the gate
+  gate.py              admission gate: pin a release, block and quarantine tampered copies
+  demo.py              live walkthrough: pin, attack, detect, block
 box/                   setup and detached-run scripts for a rented GPU
 manifests/             frozen probe sets: prompt hashes only, no prompt text
 results/               aggregate results (the only published output)
@@ -109,9 +134,18 @@ for m in stats probes scoring supplychain judges generate aggregate label; do
   PYTHONPATH=src python src/$m.py || exit 1
 done
 PYTHONPATH=src python src/supplychain_eval.py   # writes results/supplychain_fpr.json
+PYTHONPATH=src python src/demo.py               # live attack -> detect -> block walkthrough
 ```
 
-**GPU (model results).** One 24 GB GPU (an RTX 3090 was used) with a CUDA PyTorch image and a
+Guarding a real deployment:
+
+```bash
+PYTHONPATH=src python src/gate.py pin   ~/models/Qwen3-8B qwen3.manifest.json   # once, on a trusted download
+PYTHONPATH=src python src/gate.py check ~/models/Qwen3-8B qwen3.manifest.json \
+    --quarantine ~/quarantine && vllm serve ~/models/Qwen3-8B
+```
+
+**GPU (model results).** One GPU with 24 GB or more (the reported results ran on an A100 40GB) with a CUDA PyTorch image and a
 Hugging Face token in `~/.cache/huggingface/token` (Llama access must be granted on its model page):
 
 ```bash
@@ -122,7 +156,8 @@ bash box/run.sh            # detached; log in ~/audit-run.log
 
 `run.sh` runs `src/run_audit.py all`: it generates completions for every model and probe set,
 labels them, and writes `results/`. Every phase skips finished work, so an interrupted run
-resumes where it stopped. Each model condition takes about 4 hours on an RTX 3090, generation plus judging.
+resumes where it stopped. The full run took 7 hours on an A100 40GB (`AUDIT_BATCH=16`); an
+RTX 3090 at the default batch of 8 is roughly three times slower.
 
 Every data source is pinned to a commit, and `manifests/*.json` freeze each probe set by
 prompt hash (a re-fetch must match) and fix the MMLU/GSM8K subsets with a seed. With greedy
