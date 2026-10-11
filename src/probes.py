@@ -116,7 +116,7 @@ def _rows_csv(name: str) -> list[dict]:
 
 
 def _rows_parquet(name: str) -> list[dict]:
-    t = pq.read_table(io.BytesIO(_fetch(name)))
+    t = pq.read_table(io.BytesIO(_fetch(name)), use_threads=False)   # pyarrow pool can hang at exit
     return t.to_pylist()
 
 
