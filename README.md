@@ -33,7 +33,7 @@ All weights are the publishers' unquantized BF16 releases, run unmodified.
 |---|---|---|
 | Harmful-request refusal | HarmBench standard + contextual (300), StrongREJECT (313) | HarmBench Llama-2-13B classifier; StrongREJECT refusal rubric |
 | Over-refusal | XSTest safe prompts (250) | refusal judge |
-| Political refusal / deflection | promptfoo CCP-sensitive prompts (1,360) | 3-class rubric (answer / deflection / refusal), checked against 200 blind hand labels with Cohen's κ |
+| Political refusal / deflection | promptfoo CCP-sensitive prompts (1,360) | 3-class rubric (answer / deflection / refusal); validated on a 200-item blind reference set (Cohen's κ = 0.95, answer vs. refuse-or-deflect) |
 | Capability | MMLU (1,000, 0-shot, restricted A–D next token), GSM8K (500) | answer extraction |
 | Tamper detection | synthetic clean vs tampered artifacts | the detectors in `src/supplychain.py` |
 
@@ -49,29 +49,34 @@ All weights are the publishers' unquantized BF16 releases, run unmodified.
 ## Results
 
 Rates with Wilson 95% intervals and per-category label counts are in `results/rates.json`;
-paired comparisons in `results/base_vs_instruct.json`; tamper detection in
-`results/supplychain_fpr.json`.
+paired comparisons in `results/base_vs_instruct.json`; per-item labels (id and label, no text)
+in `results/labels/`; the political-judge validation set in `results/judge_validation_ccp.jsonl`;
+tamper detection in `results/supplychain_fpr.json`.
 
 | Model | HarmBench refusal | StrongREJECT refusal | XSTest over-refusal | CCP refuse + deflect | MMLU | GSM8K |
 |---|---|---|---|---|---|---|
-| Qwen3-8B | 76.7% | 95.8% | 8.0% | 58.1% | 69.4% | 87.6% |
-| GLM-4-9B-0414 | 71.0% | 95.5% | 14.4% | 46.9% | 75.7% | 80.2% |
-| Llama-3.1-8B-Instruct | 79.0% | 98.7% | 10.0% | 56.5% | 63.6% | 80.2% |
-| Qwen3-8B-Base (URIAL) | 89.3% | 98.1% | 15.6% | 59.6% | – | – |
-| Qwen3-8B-Base (URIAL + safety line) | 93.3% | 99.4% | 28.0% | 79.2% | – | – |
+| Qwen3-8B | 75.0% | 96.8% | 7.2% | 62.2% | 69.3% | 88.8% |
+| GLM-4-9B-0414 | 69.7% | 93.3% | 14.0% | 48.8% | 75.5% | 81.6% |
+| Llama-3.1-8B-Instruct | 77.0% | 96.8% | 10.4% | 57.9% | 63.4% | 80.2% |
+| Qwen3-8B-Base (URIAL) | 89.3% | 98.4% | 16.0% | 62.6% | – | – |
+| Qwen3-8B-Base (URIAL + safety line) | 93.3% | 99.4% | 27.2% | 79.9% | – | – |
 
 Qwen3-8B minus its base (URIAL), same prompts:
 
 | Probe set | Difference | 95% CI | McNemar p | Significant |
 |---|---|---|---|---|
-| HarmBench | −12.7 pts | [−17.0, −8.2] | 1.4e-8 | yes |
-| StrongREJECT | −2.2 pts | [−5.1, +0.8] | 0.17 | no |
-| XSTest | −7.6 pts | [−12.1, −2.9] | 0.0013 | yes |
-| CCP | −1.5 pts | [−3.8, +0.7] | 0.20 | no |
+| HarmBench | −14.3 pts | [−18.9, −9.6] | 1.8e-9 | yes |
+| StrongREJECT | −1.6 pts | [−4.2, +1.2] | 0.30 | no |
+| XSTest | −8.8 pts | [−13.4, −3.9] | 3.1e-4 | yes |
+| CCP | −0.4 pts | [−2.6, +1.8] | 0.79 | no |
 
 Tamper detection: the pickle scanner flagged 100/100 code-executing checkpoints with 0/200
 false positives on clean PyTorch-style checkpoints; the chat-template diff flagged 8/8 altered
 templates with 0/8 false positives.
+
+Against the base prompted with the safety line instead, Qwen3-8B is lower on HarmBench (−18.3 pts),
+XSTest (−20.0) and CCP (−17.7), all significant: one generic "may decline controversial topics"
+sentence moves the base model's political refusal by about 18 points.
 
 ## Repository layout
 
