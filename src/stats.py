@@ -83,8 +83,9 @@ def newcombe_paired(
         denom = sqrt(m1 * m0 * k1 * k0)
         phi = (max(A - n / 2, 0.0) if A > 0 else A) / denom
 
-    lo = diff - sqrt((p1 - l1) ** 2 + (u2 - p2) ** 2 - 2 * phi * (p1 - l1) * (u2 - p2))
-    hi = diff + sqrt((u1 - p1) ** 2 + (p2 - l2) ** 2 - 2 * phi * (u1 - p1) * (p2 - l2))
+    # diff = p2 - p1: the lower bound pairs p2's lower margin with p1's upper margin.
+    lo = diff - sqrt((p2 - l2) ** 2 + (u1 - p1) ** 2 - 2 * phi * (p2 - l2) * (u1 - p1))
+    hi = diff + sqrt((u2 - p2) ** 2 + (p1 - l1) ** 2 - 2 * phi * (u2 - p2) * (p1 - l1))
     return Interval(diff, max(-1.0, lo), min(1.0, hi))
 
 
@@ -108,8 +109,8 @@ def significant(p: float, alpha: float = BONFERRONI_ALPHA) -> bool:
 def cohens_kappa(rater_a: list, rater_b: list) -> float:
     """Cohen's kappa for two raters over the same items (any hashable labels).
 
-    Used to validate the automated political-topic judge against hand labels:
-    the report requires kappa >= 0.6 before the judge's rates are reported.
+    Used to check the political judge against the reference labels in
+    results/judge_validation_ccp.jsonl; its rate is reported only if kappa >= 0.6.
     """
     if len(rater_a) != len(rater_b) or not rater_a:
         raise ValueError("raters must be equal-length and non-empty")
@@ -128,7 +129,7 @@ def _demo() -> None:
     import json
     assert json.dumps(significant(mcnemar_exact(20, 2)))  # result must be JSON-serializable
 
-    # Wilson: known textbook value for 0/10 upper bound ~= 0.278 (Agresti-Coull family).
+    # Wilson: known textbook value for the 0/10 upper bound ~= 0.278.
     w = wilson(0, 10)
     assert w.point == 0.0 and w.lo == 0.0 and abs(w.hi - 0.278) < 0.005, w
     # Symmetry: 7/10 and 3/10 are mirror images around 0.5.
@@ -151,6 +152,15 @@ def _demo() -> None:
     # the shared success rate itself is not pinned at 1 (Wilson of 100/100 has slack).
     z = newcombe_paired(100, 0, 0, 0)
     assert z.point == 0.0 and z.lo < 0 < z.hi
+    # Direction: swapping before and after mirrors the interval around 0.
+    f, r = newcombe_paired(30, 4, 15, 51), newcombe_paired(30, 15, 4, 51)
+    assert abs(f.lo + r.hi) < 1e-12 and abs(f.hi + r.lo) < 1e-12, (f, r)
+    # Published values, Newcombe (1998) Table III, method 10 (its f = our after_only).
+    for cells, (lo, hi) in [((20, 2, 12, 16), (0.0562, 0.3292)),
+                            ((35, 0, 14, 1), (0.1461, 0.4175)),
+                            ((53, 0, 0, 1), (-0.0729, 0.0729))]:
+        e = newcombe_paired(*cells)
+        assert abs(e.lo - lo) < 5e-5 and abs(e.hi - hi) < 5e-5, (cells, e)
 
     # McNemar: fully discordant one way is strongly significant; balanced is not.
     assert mcnemar_exact(0, 15) < 0.0025
@@ -161,7 +171,7 @@ def _demo() -> None:
     assert significant(0.001) and not significant(0.01)
     assert abs(BONFERRONI_ALPHA - 0.00625) < 1e-12
 
-    # Cohen's kappa: perfect agreement -> 1; chance-level -> ~0.
+    # Cohen's kappa: perfect agreement -> 1.
     assert cohens_kappa(["a", "b", "c"], ["a", "b", "c"]) == 1.0
     # Known value: 2x2 with a=20,b=5,c=10,d=15 (n=50). po=0.70, pe=0.50, k=0.40.
     ra = ["y"] * 20 + ["y"] * 5 + ["n"] * 10 + ["n"] * 15
