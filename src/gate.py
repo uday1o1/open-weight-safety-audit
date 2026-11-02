@@ -10,7 +10,8 @@ and blocks the model on any finding:
     chat-template behavior change   the template now renders conversations differently
 
 With --quarantine, a blocked model is moved to a quarantine directory with its findings,
-so nothing can load it by accident. The CLI exits non-zero on a block, so it can guard a serve command:
+so nothing can load it by accident. The CLI exits non-zero on a block, so it can guard a
+serve command:
 
     python src/gate.py pin   <model_dir> manifest.json
     python src/gate.py check <model_dir> manifest.json --quarantine quarantine/ \\

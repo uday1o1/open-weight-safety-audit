@@ -17,9 +17,8 @@ labels match the committed audit labels.
     python src/guard.py run      # GPU box: generate, label, classify, aggregate
     python src/guard.py          # offline self-check
 
-Writes results/guard.json and per-item verdicts (id, audit label, input/output flags, no
-text) to
-results/guard/<model>/<set>.jsonl.
+Writes results/guard.json and per-item verdicts (id, audit label, input/output flags,
+no text) to results/guard/<model>/<set>.jsonl.
 """
 from __future__ import annotations
 

@@ -47,13 +47,14 @@ judge and classifier loads at a pinned Hugging Face revision (`MODEL_REV` in `sr
 - The base model is prompted with [URIAL](https://github.com/Re-Align/URIAL) in-context
   alignment (`inst_1k_v4.help.txt`: a helpful-assistant preamble and answered examples, with no
   safety instruction and no refusal example), so no refusal is instructed or demonstrated by the
-  prompt. A second condition uses URIAL's original `inst_1k_v4.txt`, whose preamble adds safety
+  prompt. A second condition uses URIAL's `inst_1k_v4.txt`, whose preamble includes safety
   instructions (including "you can reject to answer some controversial topics") and whose
   examples include one refusal, to measure how much a safety-oriented prompt moves refusal.
 - The rubric judges (StrongREJECT, XSTest, political) run on Qwen2.5-7B-Instruct. The HarmBench
   classifier counts an answer as a refusal whenever it does not judge it an instance of the
-  harmful behavior, so a vague or off-target answer also counts as refused; this matters most
-  for the base model.
+  harmful behavior, so a vague or off-target answer also counts as refused: the HarmBench rate
+  measures non-compliance, not only explicit refusal. Judge outputs that cannot be parsed
+  (8 StrongREJECT labels: 1 Qwen3, 3 GLM, 4 Llama; none in other sets) count as not refused.
 - Statistics: Wilson 95% intervals per rate; base-vs-instruct differences on the same prompts
   use Newcombe paired intervals and exact McNemar tests, Bonferroni-adjusted over the 8 paired
   tests (4 probe sets × 2 base prompts; α = 0.00625). Intervals are unadjusted 95%.
@@ -90,7 +91,7 @@ Cross-model differences in the first table are descriptive; each rate's Wilson i
 `results/rates.json`. Against the base prompted with the URIAL safety prompt instead, Qwen3-8B is
 lower on HarmBench (−18.3 pts), XSTest (−20.0 pts) and CCP (−17.7 pts), all significant. The
 safety-oriented prompt alone raises the base model's CCP refuse-or-deflect rate from 62.6% to
-79.9% (+17.3 pts).
+79.9% (+17.4 pts).
 
 Llama Guard 3 as an input and output filter around each model (`results/guard.json`). Harmful
 compliance is the share of HarmBench prompts whose answer the HarmBench classifier judges an
@@ -109,7 +110,8 @@ model (Llama 91.3%, GLM 92.3%, Qwen3 94.7%), at a cost of 0.4–1.2 points of XS
 The 17 harmful HarmBench answers that still get through are all cybercrime (8), illegal-activity
 (5) or misinformation (4) behaviors. On StrongREJECT the models answer few prompts
 (1.9–5.8%); the output filter passes 28 of those 33 answers, and with the input filter only 1–3 per
-model remain. The regenerated answers reproduce the audit labels exactly (2,589/2,589).
+model remain. The labels used for the filter measurement match the audit labels on all 2,589
+items (`labels_match_audit` in `results/guard.json`).
 
 Tamper detection and the admission gate (`results/supplychain_fpr.json`):
 
@@ -128,7 +130,7 @@ compares the resulting prompts. The one held-out miss sits in a document-retriev
 probe reaches; inside the gate the same edit is still caught by the checksum.
 
 The gate (`src/gate.py`) pins a trusted release and admits a copy only if every file hash,
-pickle scan and template render matches; otherwise it blocks and quarantines it. Over 20
+pickle scan and template render matches; otherwise it blocks it and, with `--quarantine`, moves it to a quarantine directory. Over 20
 synthetic pinned releases (random weights, the audited models' real chat templates, and a clean
 pickle checkpoint as in Llama) it admitted 20/20 clean copies and blocked 20/20 for each attack: modified
 weights, a smuggled pickle, an injected template, and a payload inside a pinned pickle file.
@@ -162,8 +164,8 @@ Completions are never committed: they can contain harmful text and stay on the G
 
 ## Reproducing
 
-**CPU (analysis and tamper detection).** Every module except the orchestrator carries a CPU
-self-check (the GPU modules check their pure parts):
+**CPU (analysis and tamper detection).** Every module except the orchestrator and the
+walkthrough (`demo.py`) carries a CPU self-check (the GPU modules check their pure parts):
 
 ```bash
 pip install -r requirements.txt
@@ -197,16 +199,17 @@ AUDIT_BATCH=16 AUDIT_JUDGE_BATCH=8 bash box/run.sh   # detached; log in ~/audit-
 ```
 
 `run.sh` runs `src/run_audit.py all`: it generates completions for every model and probe set,
-labels them, and writes `results/`. Every phase skips finished work, so an interrupted run
-resumes where it stopped. The reported results used these batch sizes on an A100 40GB; on a
-24 GB card keep the defaults (`AUDIT_BATCH=8`, `AUDIT_JUDGE_BATCH=4`), and greedy outputs can
-then differ slightly.
+labels them, and writes `results/`. Generation and judging skip records already written, so an
+interrupted run resumes where it stopped. The reported results used these batch sizes on an
+A100 40GB; on a 24 GB card keep the `run.sh` defaults (`AUDIT_BATCH=8`; `AUDIT_JUDGE_BATCH` 4
+for the audit, 8 for the guard run), and greedy outputs can then differ slightly.
 
 `AUDIT_BATCH=16 AUDIT_JUDGE_BATCH=8 bash box/run.sh guard` runs the safety-classifier control
-(`src/guard.py run`): it regenerates the three instruction-tuned models' answers on the harmful
-and safe sets, labels them with the audit judges, screens prompts and answers with Llama Guard 3
-8B (access must be granted on its model page), and writes `results/guard.json`. Using the
-audit's batch sizes makes the regenerated answers match the audit labels.
+(`src/guard.py run`): it generates the three instruction-tuned models' answers on the harmful
+and safe sets (reusing any already in the output directory), labels them with the audit judges, screens prompts and answers with Llama Guard 3
+8B (access must be granted on its model page), and writes `results/guard.json`. Greedy
+decoding at the audit's batch sizes is meant to reproduce the audit's answers;
+`labels_match_audit` in `results/guard.json` counts the matches.
 
 Every data source and model is pinned to a revision, and `manifests/*.json` freeze each probe
 set by prompt hash (a re-fetch must match; HarmBench contexts are fixed by the commit pin) and
@@ -215,6 +218,6 @@ rates closely; small differences can come from GPU kernels, batch size and libra
 
 ## Scope and safety
 
-All experiments run locally on self-hosted, openly available weights (Apache-2.0, MIT and the
-Llama 3.1 Community License). No model's safety behavior is modified. Harmful outputs stay on
+All experiments run on self-hosted, openly available weights (Apache-2.0, MIT and the Llama 3.1
+Community License); no hosted model API is queried. No model's safety behavior is modified. Harmful outputs stay on
 the evaluation machine; only rates and per-item labels (ids and labels, no text) are published.

@@ -39,9 +39,9 @@ def verify_checksum(path: str | Path, expected_sha256: str) -> bool:
 # ---------- malicious serialized model files ----------
 # A pickle (.bin/.pt) runs code on load. Global resolution is delegated to picklescan,
 # which simulates the pickle stack (including memoized globals); on top of its verdicts
-# we apply the policy below. A clean torch/
-# numpy checkpoint references only data reconstructors, so this flags tampering, not
-# ordinary weights -- measured as a false-positive rate in supplychain_eval.
+# we apply the policy below. A clean torch/numpy checkpoint references only data
+# reconstructors, so this flags tampering, not ordinary weights -- measured as a
+# false-positive rate in supplychain_eval.
 #
 # Module roots a legitimate weight file may use even when picklescan marks them
 # Suspicious (array/tensor/string reconstruction helpers like numpy._core._frombuffer

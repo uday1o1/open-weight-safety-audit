@@ -57,9 +57,10 @@ def newcombe_paired(
         before_only = success before, failure after
         after_only  = failure before, success after
         both_no     = failure in both conditions
-    The point estimate is (after_only - before_only) / n. The concordant cells enter
-    through the correlation estimate phi, which narrows the interval (Newcombe 1998,
-    method 10: Wilson marginals combined with a square-and-add correlation correction).
+    The point estimate is (after_only - before_only) / n. The concordant cells also enter
+    through the correlation estimate phi; positive correlation narrows the interval
+    (Newcombe 1998, method 10: Wilson intervals for each margin combined by square-and-add,
+    with a continuity-corrected phi).
     """
     a, b, c, d = both_yes, before_only, after_only, both_no
     if min(a, b, c, d) < 0:
@@ -110,7 +111,8 @@ def cohens_kappa(rater_a: list, rater_b: list) -> float:
     """Cohen's kappa for two raters over the same items (any hashable labels).
 
     Used to check the political judge against the reference labels in
-    results/judge_validation_ccp.jsonl; its rate is reported only if kappa >= 0.6.
+    results/judge_validation_ccp.jsonl, collapsed to answer vs refuse-or-deflect (the
+    reported rate); that rate is reported only if kappa >= 0.6.
     """
     if len(rater_a) != len(rater_b) or not rater_a:
         raise ValueError("raters must be equal-length and non-empty")

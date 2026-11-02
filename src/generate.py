@@ -179,9 +179,10 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int,
     return [clean_completion(t, base) for t in texts]
 
 
-# MMLU: 0-shot, answer read from the next-token distribution restricted to A-D. Free generation lets chat models start
-# reasoning and never emit a letter within a short budget. The format instruction is
-# appended at render time so the hash-frozen probe text is unchanged.
+# MMLU: 0-shot, answer read from the next-token distribution restricted to A-D. Free
+# generation lets chat models start reasoning and never emit a letter within a short
+# budget. The format instruction is appended at render time so the hash-frozen probe
+# text is unchanged.
 MMLU_SUFFIX = "\n\nAnswer with only the letter (A, B, C, or D) of the correct option."
 
 
