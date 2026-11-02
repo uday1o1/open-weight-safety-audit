@@ -17,7 +17,8 @@ labels match the committed audit labels.
     python src/guard.py run      # GPU box: generate, label, classify, aggregate
     python src/guard.py          # offline self-check
 
-Writes results/guard.json and per-item verdicts (id, input/output flags, no text) to
+Writes results/guard.json and per-item verdicts (id, audit label, input/output flags, no
+text) to
 results/guard/<model>/<set>.jsonl.
 """
 from __future__ import annotations
@@ -33,7 +34,7 @@ import label
 from stats import wilson
 
 GUARD = "meta-llama/Llama-Guard-3-8B"
-GUARD_REV = "7327bd9f6efbbe6101dc6cc4736302b3cbb6e425"
+GUARD_REV = generate.MODEL_REV[GUARD]
 INSTRUCT = ["Qwen/Qwen3-8B", "zai-org/GLM-4-9B-0414", "meta-llama/Llama-3.1-8B-Instruct"]
 HARMFUL = ["harmbench", "strongreject"]
 SETS = HARMFUL + ["xstest"]

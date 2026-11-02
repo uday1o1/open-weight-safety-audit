@@ -9,8 +9,8 @@ and blocks the model on any finding:
     code-executing serialization    a pickle file would run code on load
     chat-template behavior change   the template now renders conversations differently
 
-A blocked model is moved to a quarantine directory with its findings, so nothing can
-load it by accident. The CLI exits non-zero on a block, so it can guard a serve command:
+With --quarantine, a blocked model is moved to a quarantine directory with its findings,
+so nothing can load it by accident. The CLI exits non-zero on a block, so it can guard a serve command:
 
     python src/gate.py pin   <model_dir> manifest.json
     python src/gate.py check <model_dir> manifest.json --quarantine quarantine/ \\
@@ -28,9 +28,14 @@ from pathlib import Path
 import supplychain as sc
 
 
+# Download-tool bookkeeping, not part of the release.
+_SKIP_DIRS = {".cache", ".git"}
+
+
 def _files(model_dir: Path) -> dict[str, Path]:
+    """Every file in the release, hidden ones included."""
     return {str(p.relative_to(model_dir)): p for p in sorted(model_dir.rglob("*"))
-            if p.is_file() and not p.name.startswith(".")}
+            if p.is_file() and not _SKIP_DIRS & set(p.relative_to(model_dir).parts)}
 
 
 def make_manifest(model_dir: str | Path) -> dict:
@@ -65,7 +70,9 @@ def inspect(model_dir: str | Path, manifest: dict) -> list[str]:
     # Scan every pickle-backed file, pinned or not: a pinned upstream pickle is still code.
     for rel, p in files.items():
         if sc.classify_format(p)[0] == "pickle":
-            for f in sc.scan_pickle(p.read_bytes()):
+            with open(p, "rb") as fh:
+                found = sc.scan_pickle(fh)
+            for f in found:
                 findings.append(f"code-executing pickle: {rel} -> {f.module}.{f.name} ({f.level})")
 
     pinned_tmpl, local_tmpl = manifest.get("chat_template"), sc.load_chat_template(d)
@@ -125,6 +132,14 @@ def _demo() -> None:
         class Evil:
             def __reduce__(self):
                 return (os.system, ("echo pwned",))
+        # A hidden file is still part of the release; download-tool bookkeeping is not.
+        (model / ".cache" / "huggingface").mkdir(parents=True)
+        (model / ".cache" / "huggingface" / "meta").write_text("x")
+        assert admit(model, manifest).allowed
+        (model / ".hidden.pt").write_bytes(pickle.dumps(Evil()))
+        f = inspect(model, manifest)
+        assert "unexpected file: .hidden.pt" in f and any("code-executing" in x for x in f), f
+        (model / ".hidden.pt").unlink()
         (model / "pytorch_model.bin").write_bytes(pickle.dumps(Evil()))
         d = admit(model, manifest, quarantine_dir=Path(t) / "quarantine")
         assert not d.allowed and not model.exists() and d.quarantined_to

@@ -19,6 +19,7 @@ import json
 import socket
 from dataclasses import dataclass
 from pathlib import Path
+from typing import BinaryIO
 
 from picklescan.scanner import scan_bytes, SafetyLevel
 
@@ -37,8 +38,8 @@ def verify_checksum(path: str | Path, expected_sha256: str) -> bool:
 
 # ---------- malicious serialized model files ----------
 # A pickle (.bin/.pt) runs code on load. Global resolution is delegated to picklescan,
-# which correctly simulates the pickle stack (stack-based hand-parsing mis-resolves
-# memoized globals); on top of its verdicts we apply the policy below. A clean torch/
+# which simulates the pickle stack (including memoized globals); on top of its verdicts
+# we apply the policy below. A clean torch/
 # numpy checkpoint references only data reconstructors, so this flags tampering, not
 # ordinary weights -- measured as a false-positive rate in supplychain_eval.
 #
@@ -55,14 +56,16 @@ class PickleFinding:
     level: str          # picklescan SafetyLevel name: Suspicious | Dangerous
 
 
-def scan_pickle(data: bytes) -> list[PickleFinding]:
+def scan_pickle(data: bytes | BinaryIO) -> list[PickleFinding]:
     """List code-execution risks in a pickle stream. Empty list == no risk under policy.
 
     Flags every Dangerous global, and every Suspicious global whose module is not a known
     weight-reconstruction helper. Catches os/subprocess/builtins.eval/__import__ gadgets
-    across pickle protocols while clearing legitimate numpy/torch state_dicts.
+    across pickle protocols while clearing legitimate numpy/torch state_dicts. Accepts
+    bytes or an open binary file; a zip checkpoint is scanned member by member, so a
+    multi-GB file is never read into memory.
     """
-    result = scan_bytes(io.BytesIO(data), "model")
+    result = scan_bytes(io.BytesIO(data) if isinstance(data, bytes) else data, "model")
     findings = []
     for g in result.globals:
         root = g.module.split(".")[0]
@@ -172,7 +175,7 @@ def load_chat_template(model_dir: str | Path) -> str | None:
 
 # ---------- exposed local inference server ----------
 # Default ports of common self-hosted runtimes.
-INFERENCE_PORTS = {11434: "ollama", 8000: "vllm/tgi", 8080: "llama.cpp",
+INFERENCE_PORTS = {11434: "ollama", 8000: "vllm", 8080: "llama.cpp",
                    5000: "generic", 7860: "gradio", 1234: "lm-studio"}
 
 

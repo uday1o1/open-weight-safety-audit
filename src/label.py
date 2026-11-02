@@ -25,12 +25,13 @@ import scoring
 GENERAL_JUDGE = os.environ.get("AUDIT_JUDGE", "Qwen/Qwen2.5-7B-Instruct")
 HARMBENCH_JUDGE = "cais/HarmBench-Llama-2-13b-cls"
 
-# dataset -> (judge_model, build_fn, parse_fn, chat_wrap, max_new_tokens, load_in_4bit)
+# dataset -> (build_fn, parse_fn, chat_wrap, max_new_tokens); which judge model runs each
+# set (and the HarmBench classifier's 4-bit load) is set by the caller, run_audit.py.
 JUDGE_SPEC = {
-    "harmbench": (HARMBENCH_JUDGE, judges.build_harmbench, judges.parse_harmbench, False, 4, True),
-    "strongreject": (GENERAL_JUDGE, judges.build_strongreject, judges.parse_strongreject, True, 192, False),
-    "xstest": (GENERAL_JUDGE, judges.build_xstest, judges.parse_xstest, True, 48, False),
-    "ccp": (GENERAL_JUDGE, judges.build_political, judges.parse_political, True, 64, False),
+    "harmbench": (judges.build_harmbench, judges.parse_harmbench, False, 4),
+    "strongreject": (judges.build_strongreject, judges.parse_strongreject, True, 192),
+    "xstest": (judges.build_xstest, judges.parse_xstest, True, 48),
+    "ccp": (judges.build_political, judges.parse_political, True, 64),
 }
 CAPABILITY = {"mmlu": scoring.grade_mmlu, "gsm8k": scoring.grade_gsm8k}
 
@@ -71,13 +72,12 @@ def judge_dataset(model_id: str, dataset: str, judge_model, judge_tok,
     """Label a judged set using an already-loaded judge model; resumable.
 
     `batch` overrides the generation batch size: the HarmBench 13B classifier processes long
-    inputs (completion + template ~1k tokens) and OOMs a 24 GB card at the default batch, so
-    its caller passes a smaller one.
+    inputs (completion + template ~1k tokens), so its caller passes a smaller one.
     """
     import probes
 
     bs = batch or generate.BATCH
-    _, build_fn, parse_fn, chat_wrap, max_new, _ = JUDGE_SPEC[dataset]
+    build_fn, parse_fn, chat_wrap, max_new = JUDGE_SPEC[dataset]
     by_id = {p.id: p for p in probes.load(dataset)}
     recs = _read(generate.output_path(model_id, dataset))
     out = labeled_path(model_id, dataset)

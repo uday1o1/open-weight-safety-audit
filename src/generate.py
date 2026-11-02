@@ -1,16 +1,16 @@
 """Generation harness: run a model over a probe set and record completions.
 
 Runs on the GPU box (lazy-imports torch/transformers so this module loads without them).
-Batched greedy decoding keeps a single 24 GB GPU sufficient. Instruction-tuned models
+Batched greedy decoding on one GPU, every model at a pinned revision. Instruction-tuned models
 use their chat template (Qwen3 with thinking mode off); the Qwen3 base model is prompted
 with the URIAL in-context alignment template for the base-vs-instruct comparison. The same
 harness serves judge models (judging is generation with a judge prompt), and can load a
 large judge in 4-bit.
 
-Output: one JSONL per (model, dataset) under the output root (AUDIT_OUTPUT_DIR, default
-outside the repo on the box), one record per probe, resumable by skipping recorded ids.
-Completions may contain harmful text, so the output root is never committed; only aggregate
-rates leave the box.
+Output: one JSONL per (model, dataset) under the output root (AUDIT_OUTPUT_DIR; box/run.sh
+puts it outside the repo, the code default is the gitignored outputs/), one record per
+probe, resumable by skipping recorded ids. Completions may contain harmful text, so they
+are never committed; only results/ (rates and id/label files, no text) leaves the box.
 """
 from __future__ import annotations
 
@@ -28,6 +28,17 @@ MAX_NEW_TOKENS = {
     "ccp": 512, "mmlu": 8, "gsm8k": 512,
 }
 BATCH = int(os.environ.get("AUDIT_BATCH", "16"))
+
+# Hugging Face revisions of every model the audit loads (audited models, judges, guard).
+MODEL_REV = {
+    "Qwen/Qwen3-8B": "b968826d9c46dd6066d109eabc6255188de91218",
+    "Qwen/Qwen3-8B-Base": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+    "zai-org/GLM-4-9B-0414": "645b8482494e31b6b752272bf7f7f273ef0f3caf",
+    "meta-llama/Llama-3.1-8B-Instruct": "0e9e39f249a16976918f6564b8830bc894c89659",
+    "cais/HarmBench-Llama-2-13b-cls": "bda705349d1144fa618770bea64d99ce54e3835b",
+    "Qwen/Qwen2.5-7B-Instruct": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "meta-llama/Llama-Guard-3-8B": "7327bd9f6efbbe6101dc6cc4736302b3cbb6e425",
+}
 
 # URIAL in-context alignment prompts for the base model, Re-Align/URIAL commit b3d6f523.
 # "help" (inst_1k_v4.help.txt) has no safety instruction and no refusal example, so any
@@ -119,7 +130,8 @@ def load_model(model_id: str, dtype: str = "bfloat16", load_in_4bit: bool = Fals
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     model_id = hf_id(model_id)                      # "+safety" etc. selects a prompt, not weights
-    tok = AutoTokenizer.from_pretrained(model_id)
+    rev = MODEL_REV.get(model_id)                   # None (latest) only for an unlisted model
+    tok = AutoTokenizer.from_pretrained(model_id, revision=rev)
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
     tok.padding_side = "left"                       # decoder-only batched generation
@@ -130,7 +142,7 @@ def load_model(model_id: str, dtype: str = "bfloat16", load_in_4bit: bool = Fals
             load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16,
             bnb_4bit_quant_type="nf4")
         kwargs.pop("torch_dtype")
-    model = AutoModelForCausalLM.from_pretrained(model_id, **kwargs)
+    model = AutoModelForCausalLM.from_pretrained(model_id, revision=rev, **kwargs)
     model.eval()
     return model, tok
 
@@ -167,8 +179,7 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int,
     return [clean_completion(t, base) for t in texts]
 
 
-# MMLU: 0-shot, answer read from the restricted next-token distribution over A-D (the
-# method behind Meta's reported "MMLU 0-shot"). Free generation lets chat models start
+# MMLU: 0-shot, answer read from the next-token distribution restricted to A-D. Free generation lets chat models start
 # reasoning and never emit a letter within a short budget. The format instruction is
 # appended at render time so the hash-frozen probe text is unchanged.
 MMLU_SUFFIX = "\n\nAnswer with only the letter (A, B, C, or D) of the correct option."

@@ -18,9 +18,12 @@ venv/
 models/
 hf_cache/
 
-# Raw generations may contain harmful text; only aggregate results are committed
+# Generations and labeled completions may contain harmful text; only results/ (rates and
+# id/label files, no text) is committed
 raw/
 outputs/
+labeled/
+/guard/
 *.log
 
 # OS

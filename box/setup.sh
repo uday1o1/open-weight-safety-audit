@@ -10,9 +10,8 @@ export HF_HOME="${HF_HOME:-$HOME/hf}"
 mkdir -p "$AUDIT_OUTPUT_DIR" "$AUDIT_LABELED_DIR" "$HF_HOME"
 
 python -c "import torch; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())"
-# transformers pinned <5: 5.x broke the GenerationMixin import on this image; Qwen3 and
-# GLM-4-0414 need only >=4.51.
+# transformers 4.x: Qwen3 needs >=4.51.0 and GLM-4-0414 (Glm4ForCausalLM) >=4.51.3.
 # sentencepiece + protobuf: the HarmBench Llama-2 classifier tokenizer needs them.
-pip install -q -U "transformers>=4.51,<5" accelerate bitsandbytes scipy pyarrow numpy picklescan hf_transfer sentencepiece protobuf
+pip install -q -U "transformers>=4.51.3,<5" accelerate bitsandbytes scipy pyarrow numpy picklescan hf_transfer sentencepiece protobuf
 
 echo "setup OK: repo=$REPO_DIR out=$AUDIT_OUTPUT_DIR hf=$HF_HOME"
