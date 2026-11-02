@@ -1,9 +1,9 @@
 """Box orchestrator: generate -> label -> aggregate, resumable end to end.
 
-Phases run in order and each skips completed work, so a destroyed-and-replaced instance
-re-runs this and continues. Models load one at a time; judges load once and label every
-target. Generation and completions stay in the output root (off the repo); only the
-aggregate JSON in results/ is meant to be committed.
+Phases run in order and skip records already written, so a destroyed-and-replaced instance
+re-runs this and continues. Models load one at a time; each judge loads once per run and
+labels every target. Completions stay in the output root (off the repo); only results/
+(rates and id/label files, no text) is meant to be committed.
 
     python src/run_audit.py all        # everything
     python src/run_audit.py generate   # just completions
@@ -81,7 +81,7 @@ def phase_label() -> None:
     try:
         for model_id, datasets in TARGETS.items():
             if "harmbench" in datasets:
-                # 13B judge + ~1k-token inputs: small batch to fit a 24 GB card.
+                # 13B judge + ~1k-token inputs: small batch.
                 label.judge_dataset(model_id, "harmbench", hm, ht,
                                     batch=int(os.environ.get("AUDIT_JUDGE_BATCH", "4")))
     finally:

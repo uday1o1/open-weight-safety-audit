@@ -8,8 +8,8 @@ is read from the Hugging Face API at the same revisions. The gate is then measur
 end: pinned releases are attacked four ways and every decision is counted.
 
 The pickle scanner is the load-bearing case: a real PyTorch checkpoint is itself a pickle
-that references torch/collections/numpy globals, so the clean set is built to look like
-one -- the FPR measures whether ordinary weights are mistaken for an attack.
+that references reconstruction globals, so the clean set mimics one (numpy arrays under
+nested OrderedDicts) -- the FPR measures whether ordinary weights are mistaken for an attack.
 """
 from __future__ import annotations
 
@@ -107,8 +107,8 @@ HF_REV = {
 }
 AUDITED = list(HF_REV)
 TEMPLATE_MODELS = ["Qwen/Qwen3-8B", "zai-org/GLM-4-9B-0414", "meta-llama/Llama-3.1-8B-Instruct"]
-# Held-out templates from other publishers, never used while building the probe set: the
-# render diff's detection rate on these is the estimate for templates it was not tuned on.
+# Held-out templates from four other publishers: the render diff's detection rate beyond
+# the audited models' own templates.
 HELDOUT_REV = {
     "mistralai/Mistral-7B-Instruct-v0.3": "c170c708c41dac9275d15a8fff4eca08d52bab71",
     "microsoft/Phi-3.5-mini-instruct": "2fe192450127e6a83f7441aef6e3ca586c338b77",

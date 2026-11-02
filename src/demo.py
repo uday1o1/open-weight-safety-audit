@@ -1,8 +1,8 @@
 """Live walkthrough: anticipate -> detect -> respond for a self-hosted model release.
 
 Builds a small stand-in model release (random weights, the real Qwen3-8B chat template),
-pins it, then replays four supply-chain attacks against copies of it and an exposed local
-inference server. Each step prints the threat, what the detectors found, and what the gate
+pins it, then replays three tampering attacks against copies of it and checks an exposed
+local inference server. Each step prints the threat, what the detectors found, and what the gate
 did. Runs on a laptop in seconds; nothing is downloaded except the template (cached), and
 the injected pickle payloads are only scanned, never loaded.
 

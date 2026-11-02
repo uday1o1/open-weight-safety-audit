@@ -10,11 +10,11 @@ common `Probe` record:
     capability        MMLU (seeded subset of the 'all' test split)       1,000
     capability        GSM8K (seeded subset of the 'main' test split)       500
 
-Reproducibility (ML lens): every source is pinned to a commit (REV). Manifests under
+Reproducibility: every source is pinned to a commit (REV). Manifests under
 manifests/ record, per item, a sha256 of the prompt text and the gold-answer hash --
 never the text itself -- so the exact evaluated set is frozen and verifiable without
 redistributing harmful or politically sensitive prompts. Raw text is re-fetched on
-demand into data/raw/ (gitignored) and checked against the manifest hashes at load.
+demand into data/raw/ (gitignored) and checked against the manifest prompt hashes at load.
 The two capability subsets are drawn with a fixed seed and their chosen ids frozen.
 """
 from __future__ import annotations
@@ -38,7 +38,7 @@ SEED = 253              # fixes the MMLU/GSM8K subsets
 MMLU_N = 1000
 GSM8K_N = 500
 
-# Pinned source revisions, captured 2026-10-09.
+# Pinned source revisions.
 REV = {
     "harmbench": "c0423b952435fcc8467108d8f25962dbae5b7de2",
     "strongreject": "3432b2d696b428f242bd507df96d80f686571d5e",
@@ -79,13 +79,13 @@ def _sha(text: str) -> str:
 
 
 def _download(req, name: str, attempts: int = 6) -> bytes:
-    """urlopen + read with retry/backoff: a transient SSL/network blip mid-run is not fatal."""
+    """urlopen + read, retried with exponential backoff on any error (6 attempts)."""
     import time
     for i in range(attempts):
         try:
             with urllib.request.urlopen(req, timeout=120) as r:
                 return r.read()
-        except Exception as e:                       # transient: SSL EOF, reset, timeout, 5xx
+        except Exception as e:
             if i == attempts - 1:
                 raise
             wait = 2 ** i
@@ -116,7 +116,7 @@ def _rows_csv(name: str) -> list[dict]:
 
 
 def _rows_parquet(name: str) -> list[dict]:
-    t = pq.read_table(io.BytesIO(_fetch(name)), use_threads=False)   # pyarrow pool can hang at exit
+    t = pq.read_table(io.BytesIO(_fetch(name)), use_threads=False)   # single-threaded read
     return t.to_pylist()
 
 

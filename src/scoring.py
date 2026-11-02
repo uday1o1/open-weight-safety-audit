@@ -1,7 +1,7 @@
 """Turn raw model completions into binary outcomes for the capability sets.
 
 Refusal and political labels come from judge models (see judges.py); these two
-scorers are deterministic string extraction, so they live here and are fully tested
+scorers are deterministic string extraction, so they live here and are self-tested
 offline. Both are deliberately lenient about surrounding formatting (the models are
 not forced into a rigid output format) but strict about what counts as an answer.
 """

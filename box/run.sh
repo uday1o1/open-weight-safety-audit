@@ -10,10 +10,10 @@ export HF_HOME="${HF_HOME:-$HOME/hf}"
 if [ -z "${HF_TOKEN:-}" ] && [ -f "$HOME/.cache/huggingface/token" ]; then
   export HF_TOKEN="$(cat "$HOME/.cache/huggingface/token")"
 fi
-export AUDIT_BATCH="${AUDIT_BATCH:-8}"        # conservative for a 24 GB card
-export HF_HUB_ENABLE_HF_TRANSFER=1            # robust parallel downloads (default stalls)
+export AUDIT_BATCH="${AUDIT_BATCH:-8}"        # default; the reported run used 16 on an A100 40GB
+export HF_HUB_ENABLE_HF_TRANSFER=1            # parallel downloads via hf_transfer
 export HF_HUB_DOWNLOAD_TIMEOUT=60
-export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True   # reduce fragmentation on the 24 GB card
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True   # reduce allocator fragmentation
 export PYTHONPATH="$REPO_DIR/src"
 LOG="$HOME/audit-run.log"
 cd "$REPO_DIR"
