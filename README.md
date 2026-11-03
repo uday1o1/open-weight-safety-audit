@@ -38,7 +38,7 @@ judge and classifier loads at a pinned Hugging Face revision (`MODEL_REV` in `sr
 |---|---|---|
 | Harmful-request refusal | HarmBench standard + contextual (300), StrongREJECT (313) | HarmBench Llama-2-13B classifier (4-bit NF4); StrongREJECT refusal rubric |
 | Over-refusal | XSTest safe prompts (250) | over-refusal rubric (`src/judges.py`) |
-| Political refusal / deflection | promptfoo CCP-sensitive prompts (1,360; topics the Chinese Communist Party treats as sensitive) | 3-class rubric (answer / deflection / refusal); checked against 200 reference labels assigned by a separate, larger LLM that did not see the judge's labels: Cohen's κ = 0.95 for answer vs. refuse-or-deflect (the reported rate) and 0.49 for the three-way split, which no reported number uses |
+| Political refusal / deflection | promptfoo CCP-sensitive prompts (1,360; topics the Chinese Communist Party treats as sensitive) | 3-class rubric (answer / deflection / refusal); checked against 200 reference labels assigned by a separate general-purpose LLM (not the judge model) that did not see the judge's labels: Cohen's κ = 0.95 for answer vs. refuse-or-deflect (the reported rate) and 0.49 for the three-way split, which none of the reported rates uses |
 | Capability | MMLU (1,000, 0-shot, restricted A–D next token), GSM8K (500) | answer extraction |
 | Safety-classifier control | the HarmBench, StrongREJECT and XSTest prompts and each model's answers | Llama Guard 3 8B as input filter (prompt) and output filter (prompt + answer); harmful compliance from the audit labels |
 | Tamper detection | clean vs tampered artifacts; the real chat templates of the audited models (pinned) plus four held-out publishers' templates | the detectors in `src/supplychain.py`; end to end through the admission gate in `src/gate.py` |
@@ -108,7 +108,7 @@ XSTest prompts (2.8%); the output filter blocks 1 of 671 helpful XSTest answers 
 models. With both filters, harmful compliance on HarmBench falls by 91–95% relative to the unfiltered
 model (Llama 91.3%, GLM 92.3%, Qwen3 94.7%), at a cost of 0.4–1.2 points of XSTest helpfulness.
 The 17 harmful HarmBench answers that still get through are all cybercrime (8), illegal-activity
-(5) or misinformation (4) behaviors. On StrongREJECT the models answer few prompts
+(5) or misinformation (4) behaviors. On StrongREJECT few answers are judged compliant
 (1.9–5.8%); the output filter passes 28 of those 33 answers, and with the input filter only 1–3 per
 model remain. The labels used for the filter measurement match the audit labels on all 2,589
 items (`labels_match_audit` in `results/guard.json`).
@@ -188,8 +188,8 @@ PYTHONPATH=src python src/gate.py check ~/models/Qwen3-8B qwen3.manifest.json \
     --quarantine ~/quarantine && vllm serve ~/models/Qwen3-8B
 ```
 
-**GPU (model results).** One GPU with 24 GB or more with a CUDA PyTorch image and a Hugging Face
-token in `~/.cache/huggingface/token` (Llama access must be granted on its model page):
+**GPU (model results).** One CUDA GPU (the reported results ran on an A100 40GB) with a CUDA
+PyTorch image and a Hugging Face token in `~/.cache/huggingface/token` (Llama access must be granted on its model page):
 
 ```bash
 git clone https://github.com/uday1o1/open-weight-safety-audit.git ~/open-weight-safety-audit
@@ -198,18 +198,20 @@ bash box/setup.sh
 AUDIT_BATCH=16 AUDIT_JUDGE_BATCH=8 bash box/run.sh   # detached; log in ~/audit-run.log
 ```
 
-`run.sh` runs `src/run_audit.py all`: it generates completions for every model and probe set,
-labels them, and writes `results/`. Generation and judging skip records already written, so an
+`run.sh` runs `src/run_audit.py all`: it generates completions for each model on its probe sets
+(the base-model conditions skip MMLU and GSM8K), labels them, and writes `results/`. Generation and judging skip records already written, so an
 interrupted run resumes where it stopped. The reported results used these batch sizes on an
-A100 40GB; on a 24 GB card keep the `run.sh` defaults (`AUDIT_BATCH=8`; `AUDIT_JUDGE_BATCH` 4
-for the audit, 8 for the guard run), and greedy outputs can then differ slightly.
+A100 40GB. Without them, `AUDIT_BATCH` defaults to 8 (`run.sh`) and the judge batch to 4 for the
+HarmBench classifier and 8 for Llama Guard; on a smaller card lower both, and greedy outputs can
+then differ slightly.
 
 `AUDIT_BATCH=16 AUDIT_JUDGE_BATCH=8 bash box/run.sh guard` runs the safety-classifier control
 (`src/guard.py run`): it generates the three instruction-tuned models' answers on the harmful
 and safe sets (reusing any already in the output directory), labels them with the audit judges, screens prompts and answers with Llama Guard 3
 8B (access must be granted on its model page), and writes `results/guard.json`. Greedy
 decoding at the audit's batch sizes is meant to reproduce the audit's answers;
-`labels_match_audit` in `results/guard.json` counts the matches.
+`labels_match_audit` in `results/guard.json` counts the items whose label matches the audit
+label.
 
 Every data source and model is pinned to a revision, and `manifests/*.json` freeze each probe
 set by prompt hash (a re-fetch must match; HarmBench contexts are fixed by the commit pin) and
@@ -218,6 +220,7 @@ rates closely; small differences can come from GPU kernels, batch size and libra
 
 ## Scope and safety
 
-All experiments run on self-hosted, openly available weights (Apache-2.0, MIT and the Llama 3.1
-Community License); no hosted model API is queried. No model's safety behavior is modified. Harmful outputs stay on
-the evaluation machine; only rates and per-item labels (ids and labels, no text) are published.
+Every model the code runs (audited models, judges and classifier) is self-hosted from openly
+available weights (Apache-2.0, MIT and the Llama 3.1 Community License); the code calls no hosted
+model API. No model's safety behavior is modified. Harmful outputs stay on the evaluation
+machine; only rates and per-item labels (ids and labels, no text) are published.

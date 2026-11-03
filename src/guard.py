@@ -10,9 +10,10 @@ filter buys on the harmful sets and what it costs on safe requests:
     XSTest (safe prompts)     share of safe prompts blocked at input; share of helpful
                               answers blocked at output; helpful rate end to end
 
-Harmful compliance is the audit's own label (complied) on the regenerated completions.
-Greedy decoding with the audit's batch size reproduces them; the run reports how many
-labels match the committed audit labels.
+Harmful compliance is the audit's own label (complied) on each model's completions,
+generated unless already in the output root. Greedy decoding at the audit's batch sizes is
+meant to reproduce the audit's answers; the run reports how many labels match the
+committed audit labels.
 
     python src/guard.py run      # GPU box: generate, label, classify, aggregate
     python src/guard.py          # offline self-check

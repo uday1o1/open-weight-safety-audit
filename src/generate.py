@@ -41,8 +41,8 @@ MODEL_REV = {
 }
 
 # URIAL in-context alignment prompts for the base model, Re-Align/URIAL commit b3d6f523.
-# "help" (inst_1k_v4.help.txt) has no safety instruction and no refusal example, so any
-# refusal it produces comes from the base model itself: the primary base condition.
+# "help" (inst_1k_v4.help.txt) has no safety instruction and no refusal example, so no
+# refusal is instructed or demonstrated by the prompt: the primary base condition.
 # "safety" (inst_1k_v4.txt) tells the model it may "reject to answer some controversial
 # topics" and shows a refusal example: a sensitivity condition, selected with a "+safety"
 # suffix on the model id (e.g. "Qwen/Qwen3-8B-Base+safety").
@@ -180,7 +180,7 @@ def generate_batch(model, tok, rendered: list[str], max_new_tokens: int,
 
 
 # MMLU: 0-shot, answer read from the next-token distribution restricted to A-D. Free
-# generation lets chat models start reasoning and never emit a letter within a short
+# generation can let chat models start reasoning and not emit a letter within a short
 # budget. The format instruction is appended at render time so the hash-frozen probe
 # text is unchanged.
 MMLU_SUFFIX = "\n\nAnswer with only the letter (A, B, C, or D) of the correct option."
