@@ -7,7 +7,8 @@ and blocks the model on any finding:
     unexpected or missing file      something was added to or removed from the release
     checksum mismatch               weights or config changed after pinning
     code-executing serialization    a pickle file would run code on load
-    chat-template behavior change   the template now renders conversations differently
+    chat-template behavior change   the template renders conversations differently from
+                                    the pinned one
 
 With --quarantine, a blocked model is moved to a quarantine directory with its findings,
 so nothing can load it by accident. The CLI exits non-zero on a block, so it can guard a

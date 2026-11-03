@@ -1,9 +1,9 @@
 """Box orchestrator: generate -> label -> aggregate, resumable end to end.
 
 Phases run in order; generation and judging skip records already written (capability
-scoring and aggregation are cheap and rerun), so a destroyed-and-replaced instance re-runs
-this and continues. Models load one at a time; each judge loads once per run and
-labels every target. Completions stay in the output root (off the repo); only results/
+scoring and aggregation are cheap and rerun), so an interrupted run re-runs this and
+continues where it stopped (on a new machine, copy the output and labeled roots over
+first). Models load one at a time; each judge loads once per run and labels every target. Completions stay in the output root (off the repo); only results/
 (rates and id/label files, no text) is meant to be committed.
 
     python src/run_audit.py all        # everything

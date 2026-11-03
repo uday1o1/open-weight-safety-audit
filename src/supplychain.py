@@ -139,7 +139,7 @@ def _jinja_env():
         sort_keys=False: json.dumps(x, indent=indent, ensure_ascii=ensure_ascii,
                                     separators=separators, sort_keys=sort_keys)
     env.globals["raise_exception"] = raise_exception
-    env.globals["strftime_now"] = lambda fmt: "01 Jan 2026"     # fixed: renders must be comparable
+    env.globals["strftime_now"] = lambda fmt: "01 Jan 2026"     # constant date: renders must be comparable
     return env
 
 
@@ -149,7 +149,7 @@ def render_template(template: str, messages: list[dict], add_generation_prompt: 
         return _jinja_env().from_string(template).render(
             messages=messages, add_generation_prompt=add_generation_prompt,
             bos_token="<bos>", eos_token="<eos>", **(extra or {}))
-    except Exception as e:                       # a template that now fails is also a change
+    except Exception as e:                       # a template that fails to render is also a change
         return f"<render error: {type(e).__name__}: {e}>"
 
 

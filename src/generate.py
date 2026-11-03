@@ -10,7 +10,7 @@ large judge in 4-bit.
 Output: one JSONL per (model, dataset) under the output root (AUDIT_OUTPUT_DIR; box/run.sh
 puts it outside the repo, the code default is the gitignored outputs/), one record per
 probe, resumable by skipping recorded ids. Completions may contain harmful text, so they
-are never committed; only results/ (rates and id/label files, no text) leaves the box.
+are never committed; only results/ (rates and id/label files, no text) goes into the repo.
 """
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Provider-specific setup for a vast.ai GPU box. Idempotent; safe to re-run.
+# Setup for a rented GPU box with a CUDA PyTorch image. Idempotent; safe to re-run.
 # Assumes a CUDA PyTorch base image (torch already present). Installs the rest.
 set -euo pipefail
 

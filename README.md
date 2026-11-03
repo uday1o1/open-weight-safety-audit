@@ -5,7 +5,7 @@ and of the supply-chain checks that protect a local deployment.
 
 When a model runs on the operator's own hardware, the provider's server-side safeguards are
 gone: the safety behavior in the weights and the integrity of the downloaded files become the
-main line of defense. This project measures both on three 8–9B models from three developers.
+main line of defense. This project measures both on three 8B- and 9B-class models from three developers.
 
 ## Questions
 
@@ -160,7 +160,8 @@ manifests/             frozen probe sets: prompt hashes only, no prompt text
 results/               rates, per-item labels (no text), detector results (the only published output)
 ```
 
-Completions are never committed: they can contain harmful text and stay on the GPU machine.
+Completions are never committed: they can contain harmful text, and the harmful-request
+completions stay on the GPU machine.
 
 ## Reproducing
 
