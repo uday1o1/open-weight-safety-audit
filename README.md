@@ -223,5 +223,5 @@ rates closely; small differences can come from GPU kernels, batch size and libra
 
 Every model the code runs (audited models, judges and classifier) is self-hosted from openly
 available weights (Apache-2.0, MIT and the Llama 3.1 Community License); the code calls no hosted
-model API. No model's safety behavior is modified. Harmful outputs stay on the evaluation
+model API. No model's safety behavior is modified. Harmful-request outputs stay on the evaluation
 machine; only rates and per-item labels (ids and labels, no text) are published.
